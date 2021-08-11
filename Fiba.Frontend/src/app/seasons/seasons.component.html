@@ -1,0 +1,28 @@
+<h3>Seasons</h3>
+<div class="m-2 p-2 bg-light">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Year</th>
+                <th>Gender</th>
+                <th>Number of Teams</th>
+                <th>Last Modified</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let season of seasons">
+                <td>{{season.id}}</td>
+                <td>{{season.year}}</td>
+                <td>{{season.gender}}</td>
+                <td>{{season.nbTeams}}</td>
+                <td>{{season.dateModified | date:'full'}}</td>
+                <td>
+                    <button class="btn btn-primary" type="button">Details</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary">Add</button>
+</div>
