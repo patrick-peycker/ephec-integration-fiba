@@ -7,8 +7,9 @@ namespace Fiba.BL.Interfaces
 {
 	public interface IGuestActor
 	{
+		IEnumerable<Team> GetTeams();
 		IEnumerable<Season> GetSeasonsByGender(Guid genderId);
-		Task<Season> GetSeasonAsync(Guid genderId, int seasonId);
+		Task<Season> GetSeasonAsync(Guid genderId, Guid seasonId);
 
 		IEnumerable<Team> GetTeamsByGender(Guid genderId);
 		Team GetTeam(Guid genderId, int teamId);

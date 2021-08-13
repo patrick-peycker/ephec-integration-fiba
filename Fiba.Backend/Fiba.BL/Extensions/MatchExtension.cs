@@ -19,10 +19,7 @@ namespace Fiba.BL.Extensions
 				Time = Match.Time,
 				HomeTeamScore = Match.HomeTeamScore,
 				VisitorTeamScore = Match.VisitorTeamScore,
-
-				SeasonId = Match.HomeTeamSeasonId,
-				HomeTeamId = Match.HomeTeam.TeamId,
-				VisitorTeamId = Match.VisitorTeam.TeamId,
+				Postseason = Match.Postseason,
 
 				Statistics = Match.Statistics?.Select(s => s.ToDomain()).ToList()
 			};
@@ -42,10 +39,7 @@ namespace Fiba.BL.Extensions
 				Time = Match.Time,
 				HomeTeamScore = Match.HomeTeamScore,
 				VisitorTeamScore = Match.VisitorTeamScore,
-
-				HomeTeamSeasonId = Match.SeasonId,
-				HomeTeamId = Match.HomeTeamId,
-				VisitorTeamId = Match.VisitorTeamId,
+				Postseason = Match.Postseason,
 
 				Statistics = Match.Statistics?.Select(s => s.ToEntity()).ToList()
 			};

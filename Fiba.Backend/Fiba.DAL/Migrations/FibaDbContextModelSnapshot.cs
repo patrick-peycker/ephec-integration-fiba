@@ -26,28 +26,15 @@ namespace Fiba.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("GenderId");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            GenderId = new Guid("eddf827d-8795-4054-93b9-19276dd4af26"),
-                            Name = "Female"
-                        },
-                        new
-                        {
-                            GenderId = new Guid("7a8e0b6f-3e77-4c55-9227-d47325088b25"),
-                            Name = "Male"
-                        });
                 });
 
             modelBuilder.Entity("Fiba.DAL.Entities.Match", b =>
@@ -55,8 +42,8 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
@@ -64,14 +51,16 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("HomeTeamScore")
                         .HasColumnType("int");
 
-                    b.Property<int>("HomeTeamSeasonId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Period")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Postseason")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("SeasonId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Time")
@@ -83,14 +72,13 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("VisitorTeamScore")
                         .HasColumnType("int");
 
-                    b.Property<int>("VisitorTeamSeasonId")
-                        .HasColumnType("int");
-
                     b.HasKey("MatchId");
 
-                    b.HasIndex("HomeTeamId", "HomeTeamSeasonId");
+                    b.HasIndex("HomeTeamId");
 
-                    b.HasIndex("VisitorTeamId", "VisitorTeamSeasonId");
+                    b.HasIndex("SeasonId");
+
+                    b.HasIndex("VisitorTeamId");
 
                     b.ToTable("Matches");
                 });
@@ -101,14 +89,12 @@ namespace Fiba.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("GenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
@@ -121,10 +107,32 @@ namespace Fiba.DAL.Migrations
                     b.ToTable("Players");
                 });
 
+            modelBuilder.Entity("Fiba.DAL.Entities.PlayerTeam", b =>
+                {
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndOfContract")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartOfContract")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PlayerId", "TeamId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("PlayersTeams");
+                });
+
             modelBuilder.Entity("Fiba.DAL.Entities.Season", b =>
                 {
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SeasonId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GenderId")
                         .HasColumnType("uniqueidentifier");
@@ -145,14 +153,14 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SeasonId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("TeamId", "SeasonId");
 
                     b.HasIndex("SeasonId");
 
-                    b.ToTable("SeasonTeams");
+                    b.ToTable("SeasonsTeams");
                 });
 
             modelBuilder.Entity("Fiba.DAL.Entities.Statistic", b =>
@@ -190,6 +198,9 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Minutes")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("OffensiveRebound")
                         .HasColumnType("int");
 
@@ -199,7 +210,7 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Point")
+                    b.Property<int>("Points")
                         .HasColumnType("int");
 
                     b.Property<int>("Rebound")
@@ -211,13 +222,13 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ThreePointFieldGoalAttempted")
+                    b.Property<int>("ThreePointsFieldGoalAttempted")
                         .HasColumnType("int");
 
-                    b.Property<int>("ThreePointFieldGoalMade")
+                    b.Property<int>("ThreePointsFieldGoalMade")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("ThreePointFieldGoalPourcentage")
+                    b.Property<decimal>("ThreePointsFieldGoalPourcentage")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Turnover")
@@ -227,7 +238,9 @@ namespace Fiba.DAL.Migrations
 
                     b.HasIndex("MatchId");
 
-                    b.HasIndex("TeamId", "PlayerId");
+                    b.HasIndex("PlayerId");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Statistics");
                 });
@@ -237,55 +250,49 @@ namespace Fiba.DAL.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Abbreviation")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("GenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ThumbUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TeamId");
 
                     b.HasIndex("GenderId");
 
                     b.HasIndex("Name", "GenderId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("Fiba.DAL.Entities.TeamPlayer", b =>
-                {
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TeamId", "PlayerId");
-
-                    b.HasIndex("PlayerId");
-
-                    b.ToTable("TeamPlayers");
-                });
-
             modelBuilder.Entity("Fiba.DAL.Entities.Match", b =>
                 {
-                    b.HasOne("Fiba.DAL.Entities.SeasonTeam", "HomeTeam")
+                    b.HasOne("Fiba.DAL.Entities.Team", "HomeTeam")
                         .WithMany("HomeMatches")
-                        .HasForeignKey("HomeTeamId", "HomeTeamSeasonId")
+                        .HasForeignKey("HomeTeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Fiba.DAL.Entities.Season", "Season")
+                        .WithMany()
+                        .HasForeignKey("SeasonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Fiba.DAL.Entities.SeasonTeam", "VisitorTeam")
+                    b.HasOne("Fiba.DAL.Entities.Team", "VisitorTeam")
                         .WithMany("AwayMatches")
-                        .HasForeignKey("VisitorTeamId", "VisitorTeamSeasonId")
+                        .HasForeignKey("VisitorTeamId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -296,6 +303,21 @@ namespace Fiba.DAL.Migrations
                         .WithMany("Players")
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Fiba.DAL.Entities.PlayerTeam", b =>
+                {
+                    b.HasOne("Fiba.DAL.Entities.Player", "Player")
+                        .WithMany("PlayersTeams")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Fiba.DAL.Entities.Team", "Team")
+                        .WithMany("PlayersTeams")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -311,13 +333,13 @@ namespace Fiba.DAL.Migrations
             modelBuilder.Entity("Fiba.DAL.Entities.SeasonTeam", b =>
                 {
                     b.HasOne("Fiba.DAL.Entities.Season", "Season")
-                        .WithMany("SeasonTeams")
+                        .WithMany("SeasonsTeams")
                         .HasForeignKey("SeasonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Fiba.DAL.Entities.Team", "Team")
-                        .WithMany("SeasonTeams")
+                        .WithMany("SeasonsTeams")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -328,37 +350,28 @@ namespace Fiba.DAL.Migrations
                     b.HasOne("Fiba.DAL.Entities.Match", "Match")
                         .WithMany("Statistics")
                         .HasForeignKey("MatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Fiba.DAL.Entities.TeamPlayer", "TeamPlayer")
-                        .WithMany("Statistics")
-                        .HasForeignKey("TeamId", "PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Fiba.DAL.Entities.Team", b =>
-                {
-                    b.HasOne("Fiba.DAL.Entities.Gender", null)
-                        .WithMany("Teams")
-                        .HasForeignKey("GenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Fiba.DAL.Entities.TeamPlayer", b =>
-                {
                     b.HasOne("Fiba.DAL.Entities.Player", "Player")
-                        .WithMany("TeamPlayers")
+                        .WithMany("Statistics")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Fiba.DAL.Entities.Team", "Team")
-                        .WithMany("TeamPlayers")
+                        .WithMany("Statistics")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Fiba.DAL.Entities.Team", b =>
+                {
+                    b.HasOne("Fiba.DAL.Entities.Gender", "Gender")
+                        .WithMany("Teams")
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

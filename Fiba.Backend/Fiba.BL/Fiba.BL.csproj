@@ -1,8 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Data\Teams.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\Teams.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.18" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Fiba.DAL\Fiba.DAL.csproj" />

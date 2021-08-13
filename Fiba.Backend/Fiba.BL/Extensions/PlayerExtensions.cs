@@ -19,7 +19,7 @@ namespace Fiba.BL.Extensions
 
 				GenderId = Player.GenderId,
 
-				TeamPlayers = Player.TeamPlayers?.Select(tp => tp.ToDomain()).ToList()
+				PlayersTeams = Player.PlayersTeams?.Select(pt => pt.ToDomain()).ToList()
 			};
 		}
 
@@ -37,7 +37,7 @@ namespace Fiba.BL.Extensions
 
 				GenderId = Player.GenderId,
 
-				TeamPlayers = Player.TeamPlayers?.Select(tp => tp.ToEntity()).ToList()
+				PlayersTeams = Player.PlayersTeams?.Select(tp => tp.ToEntity()).ToList()
 			};
 		}
 	}

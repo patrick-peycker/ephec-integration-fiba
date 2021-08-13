@@ -7,15 +7,15 @@ namespace Fiba.BL.Domain
 	public class Player
 	{
 		public int PlayerId { get; set; }
-		[Required]
+
 		public string FirstName { get; set; }
-		[Required]
 		public string LastName { get; set; }
 		public string Position { get; set; }
 
-		[Required]
 		public Guid GenderId { get; set; }
-		
-		public ICollection<TeamPlayer> TeamPlayers { get; set; }
+		public Gender Gender { get; set; }
+
+		public ICollection<PlayerTeam> PlayersTeams { get; set; }
+		public ICollection<Statistic> Statistics { get; set; }
 	}
 }

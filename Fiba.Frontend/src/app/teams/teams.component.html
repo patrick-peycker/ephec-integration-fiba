@@ -1,0 +1,21 @@
+<h3 class="text-center">Teams</h3>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let team of teamService.teams">
+            <td><img src="{{team.thumbUrl}}" class="img-fluid"></td>
+            <td>{{team.name}}</td>
+            <td>{{team.city}}</td>
+            <td>{{team.gender}}</td>
+        </tr>
+    </tbody>
+</table>

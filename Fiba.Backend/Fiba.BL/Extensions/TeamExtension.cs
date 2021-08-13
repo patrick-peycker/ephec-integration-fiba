@@ -19,10 +19,12 @@ namespace Fiba.BL.Extensions
 				ThumbUrl = Team.ThumbUrl,
 
 				GenderId = Team.GenderId,
+				Gender = Team.Gender.Name,
 
-				TeamPlayers = Team.TeamPlayers?.Select(tp => tp.ToDomain()).ToList(),
-
-				SeasonTeams = Team.SeasonTeams?.Select(st => st.ToDomain()).ToList()
+				PlayersTeams = Team.PlayersTeams?.Select(tp => tp.ToDomain()).ToList(),
+				SeasonsTeams = Team.SeasonsTeams?.Select(st => st.ToDomain()).ToList(),
+				HomeMatches = Team.HomeMatches?.Select(m => m.ToDomain()).ToList(),
+				AwayMatches = Team.AwayMatches?.Select(m => m.ToDomain()).ToList()
 			};
 		}
 
@@ -41,9 +43,9 @@ namespace Fiba.BL.Extensions
 
 				GenderId = Team.GenderId,
 
-				TeamPlayers = Team.TeamPlayers?.Select(tp => tp.ToEntity()).ToList(),
-
-				SeasonTeams = Team.SeasonTeams?.Select(st => st.ToEntity()).ToList()
+				PlayersTeams = Team.PlayersTeams?.Select(tp => tp.ToEntity()).ToList(),
+				SeasonsTeams = Team.SeasonsTeams?.Select(st => st.ToEntity()).ToList(),
+				AwayMatches = Team.AwayMatches?.Select(m => m.ToEntity()).ToList()
 			};
 		}
 	}

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Fiba.BL.Extensions
 {
@@ -26,17 +23,19 @@ namespace Fiba.BL.Extensions
 				FreeTrowPourcentage = Statistic.FreeTrowPourcentage,
 				OffensiveRebound = Statistic.OffensiveRebound,
 				PersonnalFoul = Statistic.PersonnalFoul,
-				Point = Statistic.Point,
+				Points = Statistic.Points,
 				Rebound = Statistic.Rebound,
 				Steal = Statistic.Steal,
-				ThreePointFieldGoalAttempted = Statistic.ThreePointFieldGoalAttempted,
-				ThreePointFieldGoalMade = Statistic.ThreePointFieldGoalMade,
-				ThreePointFieldGoalPourcentage = Statistic.ThreePointFieldGoalPourcentage,
+				ThreePointsFieldGoalAttempted = Statistic.ThreePointsFieldGoalAttempted,
+				ThreePointsFieldGoalMade = Statistic.ThreePointsFieldGoalMade,
+				ThreePointsFieldGoalPourcentage = Statistic.ThreePointsFieldGoalPourcentage,
 				Turnover = Statistic.Turnover,
+				Minutes = Statistic.Minutes,
 
-				MatchId = Statistic.MatchId,
+				MatchId = Statistic.Match.MatchId,
 				PlayerId = Statistic.PlayerId,
-				TeamId = Statistic.TeamId
+				TeamId = Statistic.TeamId,
+
 			};
 		}
 
@@ -59,14 +58,14 @@ namespace Fiba.BL.Extensions
 				FreeTrowPourcentage = Statistic.FreeTrowPourcentage,
 				OffensiveRebound = Statistic.OffensiveRebound,
 				PersonnalFoul = Statistic.PersonnalFoul,
-				Point = Statistic.Point,
+				Points = Statistic.Points,
 				Rebound = Statistic.Rebound,
 				Steal = Statistic.Steal,
-				ThreePointFieldGoalAttempted = Statistic.ThreePointFieldGoalAttempted,
-				ThreePointFieldGoalMade = Statistic.ThreePointFieldGoalMade,
-				ThreePointFieldGoalPourcentage = Statistic.ThreePointFieldGoalPourcentage,
+				ThreePointsFieldGoalAttempted = Statistic.ThreePointsFieldGoalAttempted,
+				ThreePointsFieldGoalMade = Statistic.ThreePointsFieldGoalMade,
+				ThreePointsFieldGoalPourcentage = Statistic.ThreePointsFieldGoalPourcentage,
 				Turnover = Statistic.Turnover,
-				
+
 				MatchId = Statistic.MatchId,
 				PlayerId = Statistic.PlayerId,
 				TeamId = Statistic.TeamId

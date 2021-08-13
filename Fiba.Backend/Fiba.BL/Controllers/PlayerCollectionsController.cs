@@ -81,7 +81,7 @@ namespace Fiba.BL.Controllers
 						Player.FirstName = item["first_name"];
 						Player.LastName = item["last_name"];
 						Player.Position = item["position"];
-						Player.TeamPlayers.Add(new TeamPlayer { PlayerId = Player.PlayerId, TeamId = item["team"]["id"] });
+						Player.PlayersTeams.Add(new PlayerTeam { PlayerId = Player.PlayerId, TeamId = item["team"]["id"] });
 
 						PlayersToCreate.Add(Player);
 					}

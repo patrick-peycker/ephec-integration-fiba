@@ -1,11 +1,6 @@
-﻿using Fiba.BL.Domain;
-using Fiba.BL.Interfaces;
+﻿using Fiba.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Fiba.BL.Controllers
 {

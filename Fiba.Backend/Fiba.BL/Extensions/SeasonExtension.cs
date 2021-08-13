@@ -17,7 +17,7 @@ namespace Fiba.BL.Extensions
 				
 				GenderId = Season.GenderId,
 				
-				SeasonTeam = Season.SeasonTeams?.Select(s => s.ToDomain()).ToList(),
+				SeasonTeam = Season.SeasonsTeams?.Select(s => s.ToDomain()).ToList(),
 			};
 		}
 
@@ -33,7 +33,7 @@ namespace Fiba.BL.Extensions
 				
 				GenderId = Season.GenderId,
 
-				SeasonTeams = Season.SeasonTeam?.Select(s => s.ToEntity()).ToList(),
+				SeasonsTeams = Season.SeasonTeam?.Select(s => s.ToEntity()).ToList(),
 			};
 		}
 	}

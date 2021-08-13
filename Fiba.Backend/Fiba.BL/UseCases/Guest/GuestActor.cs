@@ -18,7 +18,7 @@ namespace Fiba.BL.UseCases.Guest
 			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} in Guest Actor !");
 		}
 
-		public async Task<Season> GetSeasonAsync(Guid genderId, int seasonId)
+		public async Task<Season> GetSeasonAsync(Guid genderId, Guid seasonId)
 		{
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} in Season Controller !");
@@ -38,6 +38,11 @@ namespace Fiba.BL.UseCases.Guest
 		public Team GetTeam(Guid genderId, int teamId)
 		{
 			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Team> GetTeams()
+		{
+			return fibaUnitOfWork.TeamRepository.Retrieve().Select(t=>t.ToDomain());
 		}
 
 		public IEnumerable<Team> GetTeamsByGender(Guid genderId)

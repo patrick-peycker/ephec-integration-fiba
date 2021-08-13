@@ -29,7 +29,7 @@ namespace Fiba.BL.Controllers
 
 		[HttpGet("{seasonId}", Name = "GetSeason")]
 		[HttpHead]
-		public async Task<ActionResult<IEnumerable<Domain.Season>>> GetSeasonAsync(Guid genderId, int seasonId)
+		public async Task<ActionResult<IEnumerable<Domain.Season>>> GetSeasonAsync(Guid genderId, Guid seasonId)
 		{
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} in Season Controller !");

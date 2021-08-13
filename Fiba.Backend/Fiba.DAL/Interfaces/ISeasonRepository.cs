@@ -9,6 +9,6 @@ namespace Fiba.DAL.Interfaces
 	{
 		Task CreateSeasonAsync(Season Season);
 		IEnumerable<Season> RetrieveSeasons(Guid genderId);
-		Task<Season> RetrieveSeasonAsync(Guid genderId, int seasonId);
+		Task<Season> RetrieveSeasonAsync(Guid genderId, Guid seasonId);
 	}
 }

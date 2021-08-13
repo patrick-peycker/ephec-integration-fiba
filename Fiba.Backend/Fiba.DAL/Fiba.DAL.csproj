@@ -5,6 +5,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210811080541_Initial.cs" />
+    <Compile Remove="Migrations\20210811080541_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210811095734_Initial.cs" />
+    <Compile Remove="Migrations\20210811095734_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210811101723_Initial.cs" />
+    <Compile Remove="Migrations\20210811101723_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210811135334_Init.cs" />
+    <Compile Remove="Migrations\20210811135334_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812101752_Init.cs" />
+    <Compile Remove="Migrations\20210812101752_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812102347_Init.cs" />
+    <Compile Remove="Migrations\20210812102347_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812103014_Init.cs" />
+    <Compile Remove="Migrations\20210812103014_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812110011_Init.cs" />
+    <Compile Remove="Migrations\20210812110011_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812111043_Init.cs" />
+    <Compile Remove="Migrations\20210812111043_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812135719_Init.cs" />
+    <Compile Remove="Migrations\20210812135719_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812140533_Init.cs" />
+    <Compile Remove="Migrations\20210812140533_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812140813_Init.cs" />
+    <Compile Remove="Migrations\20210812140813_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812144246_Init.cs" />
+    <Compile Remove="Migrations\20210812144246_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812144759_Init.cs" />
+    <Compile Remove="Migrations\20210812144759_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210812144938_Init.cs" />
+    <Compile Remove="Migrations\20210812144938_Init.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.11">

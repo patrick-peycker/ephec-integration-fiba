@@ -65,7 +65,7 @@ namespace Fiba.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public async Task<Season> RetrieveSeasonAsync(Guid genderId, int seasonId)
+		public async Task<Season> RetrieveSeasonAsync(Guid genderId, Guid seasonId)
 		{
 			if (genderId == null)
 			{

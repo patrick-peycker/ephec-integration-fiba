@@ -1,3 +1,4 @@
+using Fiba.BL.Data;
 using Fiba.BL.Interfaces;
 using Fiba.DAL;
 using Fiba.DAL.Interfaces;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Fiba.BL
 {
@@ -39,34 +41,35 @@ namespace Fiba.BL
 
 			services.AddDbContext<FibaDbContext>(options =>
 			{
-				options.UseSqlServer(@"Server=(local);Database=Fiba;Trusted_Connection=True;");
+				options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Fiba;Trusted_Connection=True;MultipleActiveResultSets=true");
 			});
+
+			services.AddTransient<Seeder>();
 
 			services.AddScoped<IFibaActors, FibaActors>();
 			services.AddScoped<IFibaUnitOfWork, FibaUnitOfWork>();
 
 			services.AddAuthentication();
-			//services
-			//	.AddAuthentication("Bearer")
-			//	.AddJwtBearer("Bearer", options =>
-			//	{
-			//		options.Authority = "http://localhost:5000";
-			//		options.RequireHttpsMetadata = false;
-			//		options.TokenValidationParameters = new TokenValidationParameters
-			//		{
-			//			ValidateAudience = false
-			//		};
-			//	});
+			services.AddAuthentication("Bearer")
+				.AddJwtBearer("Bearer", options =>
+				{
+					options.Authority = "http://localhost:5000";
+					options.RequireHttpsMetadata = false;
+					options.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateAudience = false
+					};
+				});
 
 			services.AddAuthorization();
-			//services.AddAuthorization(options =>
-			//{
-			//	options.AddPolicy("ApiScope", policy =>
-			//	{
-			//		policy.RequireAuthenticatedUser();
-			//		policy.RequireClaim("scope", "fiba.api");
-			//	});
-			//});
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("ApiScope", policy =>
+				{
+					policy.RequireAuthenticatedUser();
+					policy.RequireClaim("scope", "fiba.api");
+				});
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,8 +99,8 @@ namespace Fiba.BL
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints
-				.MapControllers();
-				//.RequireAuthorization("ApiScope");
+				.MapControllers()
+				.RequireAuthorization("ApiScope");
 			});
 		}
 	}

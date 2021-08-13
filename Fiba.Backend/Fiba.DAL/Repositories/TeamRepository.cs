@@ -52,7 +52,8 @@ namespace Fiba.DAL.Repositories
 
 		public IEnumerable<Team> Retrieve()
 		{
-			return fibaDbContext.Teams;
+			return fibaDbContext.Teams
+				.Include(t=> t.Gender);
 		}
 
 		public async Task<Team> RetrieveAsync(int id)
