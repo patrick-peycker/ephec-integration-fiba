@@ -36,7 +36,7 @@ namespace Fiba.DAL.Repositories
 
 		public IEnumerable<Gender> Retrieve()
 		{
-			return fibaDbContext.Genders.ToList();
+			return fibaDbContext.Genders;
 		}
 
 		public Task<Gender> RetrieveAsync(Guid id)

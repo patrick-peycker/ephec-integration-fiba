@@ -18,6 +18,20 @@ namespace Fiba.BL.UseCases.Guest
 			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} in Guest Actor !");
 		}
 
+		public IEnumerable<Gender> GetGenders()
+		{
+			IEnumerable<DAL.Entities.Gender> gendersFromRepo = fibaUnitOfWork.GenderRepository.Retrieve();
+			return gendersFromRepo?.Select(g => g.ToDomain());
+		}
+
+		public IEnumerable<Season> GetSeasonsByGender(Guid genderId)
+		{
+			if (genderId == null)
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Guest Actor !");
+
+			return fibaUnitOfWork.SeasonRepository.RetrieveSeasonsByGender(genderId)?.Select(s => s.ToDomain());
+		}
+
 		public async Task<Season> GetSeasonAsync(Guid genderId, Guid seasonId)
 		{
 			if (genderId == null)
@@ -27,14 +41,6 @@ namespace Fiba.BL.UseCases.Guest
 			return seasonFromRepo?.ToDomain();
 		}
 
-		public IEnumerable<Season> GetSeasonsByGender(Guid genderId)
-		{
-			if (genderId == null)
-				throw new ArgumentNullException($"{nameof(genderId)} in Season Controller !");
-
-			return fibaUnitOfWork.SeasonRepository.RetrieveSeasons(genderId)?.Select(s=>s.ToDomain());
-		}
-
 		public Team GetTeam(Guid genderId, int teamId)
 		{
 			throw new NotImplementedException();
@@ -42,7 +48,7 @@ namespace Fiba.BL.UseCases.Guest
 
 		public IEnumerable<Team> GetTeams()
 		{
-			return fibaUnitOfWork.TeamRepository.Retrieve().Select(t=>t.ToDomain());
+			return fibaUnitOfWork.TeamRepository.Retrieve().Select(t => t.ToDomain());
 		}
 
 		public IEnumerable<Team> GetTeamsByGender(Guid genderId)

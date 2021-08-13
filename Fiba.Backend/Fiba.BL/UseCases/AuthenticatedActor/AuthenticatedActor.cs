@@ -8,15 +8,77 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace Fiba.BL.UseCases.AdministratorActor
+namespace Fiba.BL.UseCases.SuperAdministrator
 {
-	public class AdministratorActor : GuestActor, IAdministratorActor
+	public class AuthenticatedActor : GuestActor, IAuthenticatedActor
 	{
 		private readonly IFibaUnitOfWork fibaUnitOfWork;
 
-		public AdministratorActor(IFibaUnitOfWork fibaUnitOfWork) : base(fibaUnitOfWork)
+		public AuthenticatedActor(IFibaUnitOfWork fibaUnitOfWork) : base(fibaUnitOfWork)
 		{
-			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} in Administrator Actor !");
+			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} in SuperAdministrator Actor !");
+		}
+
+		public async Task<IEnumerable<Domain.Team>> AddTeamsByGenderAsync(Guid genderId, List<Domain.Team> Teams)
+		{
+			if (genderId == null)
+				throw new ArgumentNullException($"{nameof(genderId)} in Administrator Actor !");
+
+			if (Teams == null)
+				throw new ArgumentException($"{nameof(Teams)} in Administrator Actor !");
+
+			foreach (var team in Teams)
+			{
+				team.GenderId = genderId;
+			}
+
+			IEnumerable<DAL.Entities.Team> teamsToCreate = Teams.Select(t => t.ToEntity());
+
+			using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+			{
+				await fibaUnitOfWork.TeamRepository.CreateTeamsAsync(teamsToCreate);
+				await fibaUnitOfWork.SaveChangesAsync();
+
+				transaction.Complete();
+			}
+
+			return teamsToCreate.Select(t => t.ToDomain());
+		}
+
+		public IEnumerable<Domain.Player> GetPlayersByGender(IEnumerable<int> playerIds)
+		{
+			return fibaUnitOfWork.PlayerRepository.GetPlayersByGender(playerIds).Select(t=>t.ToDomain());
+		}
+
+		public IEnumerable<Domain.Team> GetTeamsByGender(IEnumerable<int> teamsIds)
+		{
+			return fibaUnitOfWork.TeamRepository.GetTeamsByGender(teamsIds).Select(t=>t.ToDomain());
+		}
+
+		public async Task<IEnumerable<Domain.Player>> AddPlayersByGenderAsync(Guid genderId, List<Domain.Player> Players)
+		{
+			if (genderId == null)
+				throw new ArgumentNullException($"{nameof(genderId)} in Administrator Actor !");
+
+			if (Players == null)
+				throw new ArgumentException($"{nameof(Players)} in Administrator Actor !");
+
+			foreach (var Player in Players)
+			{
+				Player.GenderId = genderId;
+			}
+
+			IEnumerable<DAL.Entities.Player> PlayersToCreate = Players.Select(t => t.ToEntity());
+
+			using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+			{
+				await fibaUnitOfWork.PlayerRepository.CreatePlayersAsync(PlayersToCreate);
+				await fibaUnitOfWork.SaveChangesAsync();
+
+				transaction.Complete();
+			}
+
+			return PlayersToCreate.Select(t => t.ToDomain());
 		}
 
 		public async Task<Domain.Season> AddSeasonByGenderAsync(Guid genderId, Domain.Season Season)
@@ -95,11 +157,6 @@ namespace Fiba.BL.UseCases.AdministratorActor
 			};
 
 			return seasonToCreate.ToDomain();
-		}
-
-		public IEnumerable<Domain.Gender> GetGenders()
-		{
-			return fibaUnitOfWork.GenderRepository.Retrieve()?.Select(g => g.ToDomain());
 		}
 
 		public bool IsGenderExist(Guid genderId)

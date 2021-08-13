@@ -11,11 +11,10 @@ namespace Fiba.BL.Domain
 		[Required]
 		[Range(2000, 2050)]
 		public int Year { get; set; }
-
+		[Required]
 		public Guid GenderId { get; set; }
 		public Gender Gender { get; set; }
 
-		[Required]
 		public ICollection<SeasonTeam> SeasonTeam { get; set; }
 	}
 }

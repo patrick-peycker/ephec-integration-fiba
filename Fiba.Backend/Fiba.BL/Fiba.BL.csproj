@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Data\Teams.json" />
+    <Content Remove="Data\teams - Copy %282%29.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Data\Teams.json" />
+    <None Remove="Data\Teams.bak" />
   </ItemGroup>
 
   <ItemGroup>

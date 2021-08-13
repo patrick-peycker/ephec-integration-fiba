@@ -2,11 +2,9 @@
 using Fiba.BL.Helpers;
 using Fiba.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Fiba.BL.Controllers
@@ -34,7 +32,7 @@ namespace Fiba.BL.Controllers
 				return BadRequest();
 			}
 
-			var teams = fibaActors.SuperAdministratorActor.GetTeamsByGender(ids);
+			var teams = fibaActors.AuthenticatedActor.GetTeamsByGender(ids);
 
 			if (ids.Count() != teams.Count())
 			{
@@ -50,36 +48,14 @@ namespace Fiba.BL.Controllers
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} in Teams Repository");
 
-			if (!fibaActors.AdministratorActor.IsGenderExist(genderId))
+			if (!fibaActors.AuthenticatedActor.IsGenderExist(genderId))
 			{
 				return NotFound();
 			}
 
 			List<Team> teamsToCreate = new List<Team>();
 
-			using (var client = new HttpClient())
-			{
-				var httpResponse = await client.GetAsync("http://www.balldontlie.io/api/v1/teams");
-
-				if (!httpResponse.IsSuccessStatusCode)
-				{
-					Console.WriteLine($"Status Code : {httpResponse.StatusCode}");
-				}
-
-				var content = JsonConvert.DeserializeObject<dynamic>(await httpResponse.Content.ReadAsStringAsync());
-
-				foreach (var item in content.data)
-				{
-					var team = new Team();
-					team.TeamId = item["id"];
-					team.City = item["city"];
-					team.Name = item["full_name"];
-
-					teamsToCreate.Add(team);
-				}
-			}
-
-			IEnumerable<Team> teams = await fibaActors.SuperAdministratorActor.AddTeamsByGenderAsync(genderId, teamsToCreate);
+			IEnumerable<Team> teams = await fibaActors.AuthenticatedActor.AddTeamsByGenderAsync(genderId, teamsToCreate);
 
 			var idsAsString = string.Join(",", teams.Select(t => t.TeamId));
 

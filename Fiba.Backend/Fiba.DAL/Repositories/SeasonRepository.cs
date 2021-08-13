@@ -38,7 +38,7 @@ namespace Fiba.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Season> RetrieveSeasons(Guid genderId)
+		public IEnumerable<Season> RetrieveSeasonsByGender(Guid genderId)
 		{
 			if (genderId == null)
 			{

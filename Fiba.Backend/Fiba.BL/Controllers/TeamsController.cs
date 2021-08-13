@@ -2,17 +2,12 @@
 using Fiba.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Fiba.BL.Controllers
 {
-	//[Route("api/genders/{genderId}/teams")]
-
-	[Route("api/teams")]
+	[Route("api/genders/{genderId}/teams")]
 	[ApiController]
 	public class TeamsController : ControllerBase
 	{
@@ -27,6 +22,7 @@ namespace Fiba.BL.Controllers
 
 
 		[HttpGet]
+		[HttpHead]
 		public ActionResult<IEnumerable<Team>> GetTeams()
 		{
 			try

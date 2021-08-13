@@ -1,5 +1,4 @@
 ﻿using Fiba.BL.Interfaces;
-using Fiba.BL.UseCases.AdministratorActor;
 using Fiba.BL.UseCases.Guest;
 using Fiba.BL.UseCases.SuperAdministrator;
 using Fiba.DAL.Interfaces;
@@ -17,7 +16,6 @@ namespace Fiba.BL
 		}
 
 		public IGuestActor GuestActor { get { return new GuestActor(fibaUnitOfWork); } }
-		public IAdministratorActor AdministratorActor { get { return new AdministratorActor(fibaUnitOfWork); } }
-		public ISuperAdministratorActor SuperAdministratorActor { get { return new SuperAdministratorActor(fibaUnitOfWork); } }
+		public IAuthenticatedActor AuthenticatedActor { get { return new AuthenticatedActor(fibaUnitOfWork); } }
 	}
 }

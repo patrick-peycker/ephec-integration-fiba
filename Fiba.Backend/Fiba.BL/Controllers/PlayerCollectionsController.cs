@@ -2,11 +2,9 @@
 using Fiba.BL.Helpers;
 using Fiba.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Fiba.BL.Controllers
@@ -34,7 +32,7 @@ namespace Fiba.BL.Controllers
 				return BadRequest();
 			}
 
-			var Players = fibaActors.SuperAdministratorActor.GetPlayersByGender(ids);
+			var Players = fibaActors.AuthenticatedActor.GetPlayersByGender(ids);
 
 			if (ids.Count() != Players.Count())
 			{
@@ -50,45 +48,14 @@ namespace Fiba.BL.Controllers
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} in Players Repository");
 
-			if (!fibaActors.AdministratorActor.IsGenderExist(genderId))
+			if (!fibaActors.AuthenticatedActor.IsGenderExist(genderId))
 			{
 				return NotFound();
 			}
 
 			List<Player> PlayersToCreate = new List<Player>();
 
-			int nbPages = 1;
-
-			using (var client = new HttpClient())
-			{
-				for (int page = 1; page <= nbPages; page++)
-				{
-					var httpResponse = await client.GetAsync("http://www.balldontlie.io/api/v1/players?per_page=100&page={page}");
-
-					if (!httpResponse.IsSuccessStatusCode)
-					{
-						Console.WriteLine($"Status Code : {httpResponse.StatusCode}");
-					}
-
-					var content = JsonConvert.DeserializeObject<dynamic>(await httpResponse.Content.ReadAsStringAsync());
-
-					nbPages = content["meta"]["total_pages"];
-
-					foreach (var item in content.data)
-					{
-						var Player = new Player();
-						Player.PlayerId = item["id"];
-						Player.FirstName = item["first_name"];
-						Player.LastName = item["last_name"];
-						Player.Position = item["position"];
-						Player.PlayersTeams.Add(new PlayerTeam { PlayerId = Player.PlayerId, TeamId = item["team"]["id"] });
-
-						PlayersToCreate.Add(Player);
-					}
-				}
-			}
-
-			IEnumerable<Player> Players = await fibaActors.SuperAdministratorActor.AddPlayersByGenderAsync(genderId, PlayersToCreate);
+			IEnumerable<Player> Players = await fibaActors.AuthenticatedActor.AddPlayersByGenderAsync(genderId, PlayersToCreate);
 
 			var idsAsString = string.Join(",", Players.Select(t => t.PlayerId));
 
