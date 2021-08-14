@@ -11,7 +11,7 @@ namespace Fiba.DAL
 
 		public FibaUnitOfWork(FibaDbContext fibaDbContext)
 		{
-			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} in Fiba Unit Of Work !");
+			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} is empty in Fiba Unit Of Work !");
 		}
 
 		public ISeasonRepository SeasonRepository { get { return new SeasonRepository(fibaDbContext); } }

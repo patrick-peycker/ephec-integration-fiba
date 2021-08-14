@@ -8,11 +8,12 @@ namespace Fiba.BL.Extensions
 		public static Domain.Match ToDomain(this DAL.Entities.Match Match)
 		{
 			if (Match == null)
-				throw new ArgumentNullException($"{nameof(Match)} in Round Extension !");
+				throw new ArgumentNullException($"{nameof(Match)} is empty in Match Extension !");
 
 			return new Domain.Match
 			{
 				MatchId = Match.MatchId,
+
 				Status = Match.Status,
 				Date = Match.Date,
 				Period = Match.Period,
@@ -20,6 +21,15 @@ namespace Fiba.BL.Extensions
 				HomeTeamScore = Match.HomeTeamScore,
 				VisitorTeamScore = Match.VisitorTeamScore,
 				Postseason = Match.Postseason,
+
+				SeasonId = Match.SeasonId,
+				Season = Match.Season.Year,
+
+				HomeTeamId = Match.HomeTeamId,
+				HomeTeam = Match.HomeTeam?.ToDomain(),
+
+				VisitorTeamId = Match.VisitorTeamId,
+				VisitorTeam = Match.VisitorTeam?.ToDomain(),
 
 				Statistics = Match.Statistics?.Select(s => s.ToDomain()).ToList()
 			};

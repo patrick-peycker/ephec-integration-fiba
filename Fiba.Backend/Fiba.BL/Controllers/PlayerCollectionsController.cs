@@ -17,7 +17,7 @@ namespace Fiba.BL.Controllers
 
 		public PlayerCollectionsController(IFibaActors fibaActors)
 		{
-			this.fibaActors = fibaActors ?? throw new ArgumentNullException($"{nameof(fibaActors)} in PlayerCollection Controller !");
+			this.fibaActors = fibaActors ?? throw new ArgumentNullException($"{nameof(fibaActors)} is empty in PlayerCollection Controller !");
 		}
 
 		[HttpGet("{ids}", Name = "GetPlayerCollectionsByGender")]

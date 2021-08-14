@@ -16,6 +16,16 @@ namespace Fiba.DAL.Repositories
 			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} in Gender Repository !");
 		}
 
+		public IEnumerable<Gender> Retrieve()
+		{
+			return fibaDbContext.Genders;
+		}
+
+		public Task<Gender> RetrieveAsync(Guid id)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Task CreateAsync(Gender Entity)
 		{
 			throw new NotImplementedException();
@@ -32,16 +42,6 @@ namespace Fiba.DAL.Repositories
 				throw new ArgumentNullException($"{nameof(genderId)} in Gender Repository !");
 
 			return fibaDbContext.Genders.Any(g => g.GenderId == genderId);
-		}
-
-		public IEnumerable<Gender> Retrieve()
-		{
-			return fibaDbContext.Genders;
-		}
-
-		public Task<Gender> RetrieveAsync(Guid id)
-		{
-			throw new NotImplementedException();
 		}
 
 		public Task UpdateAsync(Gender Entity)

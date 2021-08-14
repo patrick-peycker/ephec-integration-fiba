@@ -14,10 +14,10 @@ namespace Fiba.BL.Controllers
 		private readonly ILogger logger;
 		private readonly IFibaActors fibaActors;
 
-		public GendersController(ILogger logger, IFibaActors fibaActors)
+		public GendersController(ILogger<GendersController> logger, IFibaActors fibaActors)
 		{
 			this.logger = logger;
-			this.fibaActors = fibaActors ?? throw new ArgumentNullException($"{nameof(fibaActors)} in Gender Controller !");
+			this.fibaActors = fibaActors ?? throw new ArgumentNullException($"{nameof(fibaActors)} is empty in Gender Controller !");
 		}
 
 		[HttpGet]
@@ -32,7 +32,7 @@ namespace Fiba.BL.Controllers
 
 			catch (Exception ex)
 			{
-				var error = "Failed to get genders !";
+				var error = "Failed to Get Genders !";
 				logger.LogError($"{error} - {ex.Message}");
 				return BadRequest(error);
 			}

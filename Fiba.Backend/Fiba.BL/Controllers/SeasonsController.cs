@@ -1,4 +1,5 @@
-﻿using Fiba.BL.Interfaces;
+﻿using Fiba.BL.Domain;
+using Fiba.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,27 +15,28 @@ namespace Fiba.BL.Controllers
 		private readonly ILogger logger;
 		private readonly IFibaActors fibaActors;
 
-		public SeasonsController(ILogger logger, IFibaActors fibaActors)
+		public SeasonsController(ILogger<SeasonsController> logger, IFibaActors fibaActors)
 		{
 			this.logger = logger;
-			this.fibaActors = fibaActors ?? throw new ArgumentNullException($"{nameof(fibaActors)} in Season Controller !");
+			this.fibaActors = fibaActors ?? throw new ArgumentNullException($"{nameof(fibaActors)} is empty in Season Controller !");
 		}
 
 		[HttpGet]
 		[HttpHead]
-		public ActionResult<IEnumerable<Domain.Season>> GetSeasonsByGender(Guid genderId)
+		public ActionResult<IEnumerable<Season>> GetSeasonsByGender(Guid genderId)
 		{
 			if (genderId == null)
-				throw new ArgumentNullException($"{nameof(genderId)} in Season Controller !");
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Season Controller !");
+
 			try
 			{
-				logger.LogInformation($"Get Seansons by gender called...");
+				logger.LogInformation($"Get Seansons by Gender called...");
 				return Ok(fibaActors.GuestActor.GetSeasonsByGender(genderId));
 			}
 
 			catch (Exception ex)
 			{
-				var error = "Failed to get Seansons by gender !";
+				var error = "Failed to Get Seansons by Gender !";
 				logger.LogError($"{error} - {ex.Message}");
 				return BadRequest(error);
 			}
@@ -42,17 +44,30 @@ namespace Fiba.BL.Controllers
 
 		[HttpGet("{seasonId}", Name = "GetSeason")]
 		[HttpHead]
-		public async Task<ActionResult<IEnumerable<Domain.Season>>> GetSeasonAsync(Guid genderId, Guid seasonId)
+		public async Task<ActionResult<IEnumerable<Season>>> GetSeasonByIdAsync(Guid genderId, Guid seasonId)
 		{
 			if (genderId == null)
-				throw new ArgumentNullException($"{nameof(genderId)} in Season Controller !");
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Season Controller !");
 
-			var season = await fibaActors.GuestActor.GetSeasonAsync(genderId, seasonId);
+			Season season;
 
-			if (season == null)
-				return NotFound();
+			try
+			{
+				logger.LogInformation($"Get Seanson by Id called...");
+				season = await fibaActors.GuestActor.GetSeasonByIdAsync(genderId, seasonId);
 
-			return Ok(season);
+				if (season == null)
+					return NotFound();
+
+				return Ok(season);
+			}
+
+			catch (Exception ex)
+			{
+				var error = "Failed to Get Season by id !";
+				logger.LogError($"{error} - {ex.Message}");
+				return BadRequest(error);
+			}
 		}
 
 

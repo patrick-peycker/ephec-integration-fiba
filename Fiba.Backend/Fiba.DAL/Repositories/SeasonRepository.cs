@@ -17,6 +17,35 @@ namespace Fiba.DAL.Repositories
 			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} in Season Repository !");
 		}
 
+		public IEnumerable<Season> RetrieveSeasons(Guid genderId)
+		{
+			if (genderId == null)
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Season Repository !");
+
+			return fibaDbContext.Seasons
+				.Include(s => s.Gender)
+				.Where(s => s.GenderId == genderId);
+		}
+
+		public async Task<Season> RetrieveSeasonByIdAsync(Guid genderId, Guid seasonId)
+		{
+			if (genderId == null)
+			{
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Season Repository !");
+			}
+
+			return await fibaDbContext.Seasons
+				.Include(s=> s.Gender)
+				.Include(s => s.Matches)
+				.Where(s => s.GenderId == genderId && s.SeasonId == seasonId)
+				.FirstOrDefaultAsync();
+		}
+
+		public Task<Season> RetrieveAsync(Guid id)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Task CreateAsync(Season Entity)
 		{
 			throw new NotImplementedException();
@@ -38,24 +67,7 @@ namespace Fiba.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Season> RetrieveSeasonsByGender(Guid genderId)
-		{
-			if (genderId == null)
-			{
-				throw new ArgumentNullException($"{nameof(genderId)} in Season Repository !");
-			}
-
-			return fibaDbContext.Seasons
-				.Include(s => s.Gender)
-				.Where(s => s.GenderId == genderId);
-		}
-
 		public IEnumerable<Season> Retrieve()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<Season> RetrieveAsync(Guid id)
 		{
 			throw new NotImplementedException();
 		}
@@ -65,17 +77,6 @@ namespace Fiba.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public async Task<Season> RetrieveSeasonAsync(Guid genderId, Guid seasonId)
-		{
-			if (genderId == null)
-			{
-				throw new ArgumentNullException($"{nameof(genderId)} in Season Repository !");
-			}
 
-			return await fibaDbContext.Seasons
-				.Include(s => s.Gender)
-				.Where(s => s.GenderId == genderId && s.SeasonId == seasonId)
-				.FirstOrDefaultAsync();
-		}
 	}
 }

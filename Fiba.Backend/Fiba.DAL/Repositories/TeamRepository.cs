@@ -14,12 +14,28 @@ namespace Fiba.DAL.Repositories
 
 		public TeamRepository(FibaDbContext fibaDbContext)
 		{
-			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} in Team Repository !");
+			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} is empty in Team Repository !");
+		}
+
+		public IEnumerable<Team> RetrieveTeamsByGender(Guid genderId)
+		{
+			if (genderId == null)
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Team Repository !");
+
+			return fibaDbContext.Teams
+				.Include(s => s.Gender)
+				.Where(s => s.GenderId == genderId);
 		}
 
 		public Task CreateAsync(Team Entity)
 		{
 			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Team> Retrieve()
+		{
+			return fibaDbContext.Teams
+				.Include(t => t.Gender);
 		}
 
 		public async Task CreateTeamsAsync(IEnumerable<Team> Teams)
@@ -38,23 +54,9 @@ namespace Fiba.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Team> GetTeamsByGender(IEnumerable<int> teamIds)
-		{
-			if (teamIds == null)
-			{
-				throw new ArgumentNullException($"{nameof(teamIds)} in Teams Repository");
-			}
 
-			return fibaDbContext.Teams
-				.Where(t => teamIds.Contains(t.TeamId))
-				.ToList();
-		}
 
-		public IEnumerable<Team> Retrieve()
-		{
-			return fibaDbContext.Teams
-				.Include(t=> t.Gender);
-		}
+
 
 		public async Task<Team> RetrieveAsync(int id)
 		{

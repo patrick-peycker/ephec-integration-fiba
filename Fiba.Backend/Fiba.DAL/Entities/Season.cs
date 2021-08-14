@@ -13,6 +13,7 @@ namespace Fiba.DAL.Entities
 		public Gender Gender { get; set; }
 
 		public ICollection<SeasonTeam> SeasonsTeams { get; set; }
+		public ICollection<Match> Matches { get; set; }
 	}
 }
 

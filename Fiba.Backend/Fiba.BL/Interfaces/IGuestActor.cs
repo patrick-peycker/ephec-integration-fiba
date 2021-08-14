@@ -9,11 +9,13 @@ namespace Fiba.BL.Interfaces
 	{
 		IEnumerable<Gender> GetGenders();
 		IEnumerable<Season> GetSeasonsByGender(Guid genderId);
+		IEnumerable<Team> GetTeamsByGender(Guid genderId);
+		IEnumerable<Player> GetPlayersByGender(Guid genderId);
+
+		Task<Season> GetSeasonByIdAsync(Guid genderId, Guid seasonId);
 	
 		IEnumerable<Team> GetTeams();
 		Task<Season> GetSeasonAsync(Guid genderId, Guid seasonId);
-
-		IEnumerable<Team> GetTeamsByGender(Guid genderId);
 		Team GetTeam(Guid genderId, int teamId);
 	}
 }

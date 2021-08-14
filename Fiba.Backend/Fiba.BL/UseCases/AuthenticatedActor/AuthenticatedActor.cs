@@ -1,6 +1,7 @@
 ﻿using Fiba.BL.Extensions;
 using Fiba.BL.Interfaces;
 using Fiba.BL.UseCases.Guest;
+using Fiba.DAL.Entities;
 using Fiba.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 
 		public AuthenticatedActor(IFibaUnitOfWork fibaUnitOfWork) : base(fibaUnitOfWork)
 		{
-			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} in SuperAdministrator Actor !");
+			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} is empty in Authenticated Actor !");
 		}
 
 		public async Task<IEnumerable<Domain.Team>> AddTeamsByGenderAsync(Guid genderId, List<Domain.Team> Teams)
@@ -43,16 +44,6 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 			}
 
 			return teamsToCreate.Select(t => t.ToDomain());
-		}
-
-		public IEnumerable<Domain.Player> GetPlayersByGender(IEnumerable<int> playerIds)
-		{
-			return fibaUnitOfWork.PlayerRepository.GetPlayersByGender(playerIds).Select(t=>t.ToDomain());
-		}
-
-		public IEnumerable<Domain.Team> GetTeamsByGender(IEnumerable<int> teamsIds)
-		{
-			return fibaUnitOfWork.TeamRepository.GetTeamsByGender(teamsIds).Select(t=>t.ToDomain());
 		}
 
 		public async Task<IEnumerable<Domain.Player>> AddPlayersByGenderAsync(Guid genderId, List<Domain.Player> Players)
@@ -172,6 +163,21 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 				date = date.AddDays(1);
 			}
 			return date;
+		}
+
+		Task<IEnumerable<Domain.Team>> IAuthenticatedActor.AddTeamsByGenderAsync(Guid genderId, List<Domain.Team> Teams)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Domain.Player> GetPlayersByGender(IEnumerable<int> playerIds)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Domain.Team> GetTeamsByGender(IEnumerable<int> isd)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

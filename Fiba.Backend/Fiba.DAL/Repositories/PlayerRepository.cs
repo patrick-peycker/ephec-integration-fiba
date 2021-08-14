@@ -1,5 +1,6 @@
 ﻿using Fiba.DAL.Entities;
 using Fiba.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,17 @@ namespace Fiba.DAL.Repositories
 
 		public PlayerRepository(FibaDbContext fibaDbContext)
 		{
-			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} in Player Repository !");
+			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} is empty in Player Repository !");
+		}
+
+		public IEnumerable<Player> RetrievePlayersByGender(Guid genderId)
+		{
+			if (genderId == null)
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Player Repository !");
+
+			return fibaDbContext.Players
+				.Include(s => s.Gender)
+				.Where(s => s.GenderId == genderId);
 		}
 
 		public IEnumerable<Player> GetPlayersByGender(IEnumerable<int> playerIds)

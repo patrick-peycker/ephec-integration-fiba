@@ -7,8 +7,8 @@ namespace Fiba.DAL.Interfaces
 {
 	public interface ISeasonRepository : IRepository<Season, Guid>
 	{
-		IEnumerable<Season> RetrieveSeasonsByGender(Guid genderId);
+		IEnumerable<Season> RetrieveSeasons(Guid genderId);
+		Task<Season> RetrieveSeasonByIdAsync(Guid genderId, Guid seasonId);
 		Task CreateSeasonAsync(Season Season);
-		Task<Season> RetrieveSeasonAsync(Guid genderId, Guid seasonId);
 	}
 }
