@@ -11,9 +11,5 @@ namespace Fiba.BL.Domain
 		[Required]
 		[MaxLength(50)]
 		public string Name { get; set; }
-
-		public ICollection<Season> Seasons { get; set; }
-		public ICollection<Team> Teams { get; set; }
-		public ICollection<Player> Players { get; set; }
 	}
 }

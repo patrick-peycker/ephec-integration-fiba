@@ -5,7 +5,9 @@ import { map } from "rxjs/operators";
 import { Team } from "../models/Team";
 import { AuthentificationService } from "./authentification.service";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 
 export class TeamService {
 
@@ -13,9 +15,9 @@ export class TeamService {
 
     constructor(private httpClient: HttpClient, private authentification: AuthentificationService) { }
 
-    getAll(): Observable<void> {
+    getByGender(id : string): Observable<void> {
         return this.httpClient
-            .get<Team[]>("http://localhost:5001/api/teams")
+            .get<Team[]>(`http://localhost:5001/api/genders/${id}/teams`)
             .pipe(map(data => {
                 this.teams = data;
                 return;

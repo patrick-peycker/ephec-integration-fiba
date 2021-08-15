@@ -1,27 +1,30 @@
 <h3 class="text-center">Seaons</h3>
 
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Id</th>
-                <th>Year</th>
-                <th>Gender</th>
-                <th>Number of Teams</th>
-                <th>Last Modified</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let season of seasons">
-                <td>{{season.id}}</td>
+<div class="m-2 p-2">
+    <div class="form-group">
+        <label for="selectGender">Gender : </label>
+        <select class="form-control" id="selectGender" (change)="getByGender()" [formControl]="selectGender">
+            <option *ngFor="let gender of genderService.genders" [ngValue]=gender.genderId>{{gender.name}}</option>
+        </select>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Year</th>
+            <th>Gender</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let season of seasonService.seasons">
                 <td>{{season.year}}</td>
                 <td>{{season.gender}}</td>
-                <td>{{season.nbTeams}}</td>
-                <td>{{season.dateModified | date:'full'}}</td>
                 <td>
-                    <button class="btn btn-primary" type="button">Details</button>
+                    <a>Teams</a> | <a>Matches</a>
                 </td>
             </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-primary">Add</button>
+    </tbody>
+</table>
+<button class="btn btn-primary">Add</button>

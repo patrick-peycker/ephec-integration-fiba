@@ -1,0 +1,10 @@
+<div class="m-2 p-2">
+    <form>
+        <div class="form-group">
+            <label for="selectGender">Gender : </label>
+            <select class="form-control" id="selectGender" formControlName="gender">
+                <option *ngFor="let gender of genderService.genders" [ngValue]="gender.id">{{gender.name}}</option>
+            </select>
+        </div>
+    </form>
+</div>

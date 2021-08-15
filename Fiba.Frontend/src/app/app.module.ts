@@ -11,12 +11,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { LoginComponent } from './login/login.component';
 import { AuthgardService } from './services/authgard.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { SeasonService } from './services/season.service';
 import { TeamService } from './services/team.service';
 import { TeamsComponent } from './teams/teams.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { SelectGenderComponent } from './select-gender/select-gender.component';
+import { GenderService } from './services/gender.service';
+import { PlayersComponent } from './players/players.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -30,12 +33,13 @@ export function tokenGetter() {
     SeasonsComponent,
     SeasonComponent,
     LoginComponent,
-    AuthCallbackComponent
+    AuthCallbackComponent,
+    SelectGenderComponent,
+    PlayersComponent
   ],
 
   imports: [
     AgGridModule.withComponents([]),
-    FormsModule,
     ReactiveFormsModule,
     BrowserModule,
     NgbModule,
@@ -43,10 +47,11 @@ export function tokenGetter() {
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'home', component: HomeComponent },
-      { path: 'teams', component: TeamsComponent },
-      { path: 'login', component: LoginComponent },
       { path: 'seasons', component: SeasonsComponent },
-      { path: 'auth-callback', component: AuthCallbackComponent}
+      { path: 'teams', component: TeamsComponent },
+      { path: 'players', component: PlayersComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'auth-callback', component: AuthCallbackComponent }
     ]),
     JwtModule.forRoot({
       config: {
@@ -58,7 +63,8 @@ export function tokenGetter() {
   ],
   providers: [
     SeasonService,
-    TeamService
+    TeamService,
+    GenderService
   ],
   bootstrap: [AppComponent]
 })

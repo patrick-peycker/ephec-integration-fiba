@@ -18,7 +18,7 @@ namespace Fiba.BL.Extensions
 				GenderId = Season.GenderId,
 				Gender = Season.Gender?.Name,
 				
-				SeasonTeam = Season.SeasonsTeams?.Select(s => s.ToDomain()).ToList(),
+				SeasonTeams = Season.SeasonsTeams?.Select(s => s.ToDomain()).ToList(),
 				Matches = Season.Matches?.Select(s=> s.ToDomain()).ToList()
 			};
 		}
@@ -35,7 +35,7 @@ namespace Fiba.BL.Extensions
 				Year = Season.Year,
 				GenderId = Season.GenderId,
 
-				SeasonsTeams = Season.SeasonTeam?.Select(s => s.ToEntity()).ToList(),
+				SeasonsTeams = Season.SeasonTeams?.Select(s => s.ToEntity()).ToList(),
 				Matches = Season.Matches?.Select(s => s.ToEntity()).ToList()
 			};
 		}

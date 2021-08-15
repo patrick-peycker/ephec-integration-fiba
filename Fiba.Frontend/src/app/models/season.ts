@@ -1,9 +1,6 @@
-import { NumberLiteralType } from "typescript";
-
 export class Season {
-    id: number;
+    seasonId: number;
     year: number;
+    genderId : string;
     gender: string;
-    nbTeams: number;
-    dateModified: Date;
 }
