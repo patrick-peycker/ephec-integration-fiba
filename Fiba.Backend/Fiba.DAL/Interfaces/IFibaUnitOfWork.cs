@@ -6,5 +6,6 @@
 		IGenderRepository GenderRepository { get; }
 		ITeamRepository TeamRepository { get; }
 		IPlayerRepository PlayerRepository { get; }
+		IMatchRepository MatchRepository { get; }
 	}
 }

@@ -16,7 +16,6 @@ namespace Fiba.BL.Domain
 		public bool Postseason { get; set; }
 
 		public Guid SeasonId { get; set; }
-		public int Season { get; set; }
 
 		public int HomeTeamId { get; set; }
 		public Team HomeTeam { get; set; }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Fiba.BL.Extensions
 {
-	public static class SeasonTeamExtension
+	public static class SeasonTeamsExtension
 	{
 		public static Domain.SeasonTeam ToDomain(this DAL.Entities.SeasonTeam SeasonTeam)
 		{
@@ -14,7 +14,6 @@ namespace Fiba.BL.Extensions
 			{
 				SeasonId = SeasonTeam.SeasonId,
 				TeamId = SeasonTeam.TeamId,
-
 			};
 		}
 

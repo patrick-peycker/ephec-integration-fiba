@@ -7,29 +7,29 @@ import { AuthentificationService } from '../services/authentification.service';
   templateUrl: './auth-callback.component.html',
   styleUrls: ['./auth-callback.component.css']
 })
+
 export class AuthCallbackComponent implements OnInit {
 
   error: boolean;
-  constructor(private authService: AuthentificationService, private router: Router) {}
- 
-  ngOnInit() {
-  this.authService.completeAuthentication()
-    .then(
-      () => {
-        const pathRedirect = localStorage.getItem('path-redirect');
-        if (pathRedirect != null) {
-          localStorage.removeItem('path-redirect');
-          this.router.navigate([pathRedirect]);
-        } else {
-          this.router.navigate(['/home']);
-        }
-      })
-    
-    .catch(
-      (err) => {
-      this.error=true;
-    })
-    }
 
-  
+  constructor(private authService: AuthentificationService, private router: Router) { }
+
+  ngOnInit() {
+    this.authService.completeAuthentication()
+      .then(
+        () => {
+          const pathRedirect = localStorage.getItem('path-redirect');
+          if (pathRedirect != null) {
+            localStorage.removeItem('path-redirect');
+            this.router.navigate([pathRedirect]);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        })
+
+      .catch(
+        (err) => {
+          this.error = true;
+        })
+  }
 }

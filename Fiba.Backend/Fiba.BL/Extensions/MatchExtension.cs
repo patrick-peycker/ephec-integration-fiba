@@ -23,8 +23,7 @@ namespace Fiba.BL.Extensions
 				Postseason = Match.Postseason,
 
 				SeasonId = Match.SeasonId,
-				Season = Match.Season.Year,
-
+				
 				HomeTeamId = Match.HomeTeamId,
 				HomeTeam = Match.HomeTeam?.ToDomain(),
 
@@ -38,7 +37,7 @@ namespace Fiba.BL.Extensions
 		public static DAL.Entities.Match ToEntity(this Domain.Match Match)
 		{
 			if (Match == null)
-				throw new ArgumentNullException($"{nameof(Match)} in Round Extension !");
+				throw new ArgumentNullException($"{nameof(Match)} is empty in Match Extension !");
 
 			return new DAL.Entities.Match
 			{

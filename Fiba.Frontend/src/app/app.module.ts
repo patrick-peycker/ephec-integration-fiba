@@ -20,6 +20,9 @@ import { AgGridModule } from 'ag-grid-angular';
 import { SelectGenderComponent } from './select-gender/select-gender.component';
 import { GenderService } from './services/gender.service';
 import { PlayersComponent } from './players/players.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { SeasonCreateComponent } from './season-create/season-create.component';
+import { MatchesComponent } from './matches/matches.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -35,7 +38,10 @@ export function tokenGetter() {
     LoginComponent,
     AuthCallbackComponent,
     SelectGenderComponent,
-    PlayersComponent
+    PlayersComponent,
+    NotFoundComponent,
+    SeasonCreateComponent,
+    MatchesComponent
   ],
 
   imports: [
@@ -48,10 +54,14 @@ export function tokenGetter() {
       { path: '', component: HomeComponent },
       { path: 'home', component: HomeComponent },
       { path: 'seasons', component: SeasonsComponent },
+      { path: 'matches/:id', component: MatchesComponent },
+      { path: 'season-create', canActivate: [AuthgardService], component: SeasonCreateComponent },
       { path: 'teams', component: TeamsComponent },
       { path: 'players', component: PlayersComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'auth-callback', component: AuthCallbackComponent }
+      { path: 'auth-callback', component: AuthCallbackComponent },
+      { path: 'not-found', component: NotFoundComponent },
+      { path: '**', redirectTo: 'not-found' }
     ]),
     JwtModule.forRoot({
       config: {

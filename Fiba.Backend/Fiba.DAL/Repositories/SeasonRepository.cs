@@ -24,6 +24,7 @@ namespace Fiba.DAL.Repositories
 
 			return fibaDbContext.Seasons
 				.Include(s => s.Gender)
+				.Include(s=>s.SeasonsTeams)
 				.Where(s => s.GenderId == genderId);
 		}
 

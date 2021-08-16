@@ -56,6 +56,17 @@ namespace Fiba.BL.Data
 				await fibaDbContext.SaveChangesAsync();
 			}
 
+			// SeasonTeams - Seed
+			if (!fibaDbContext.SeasonsTeams.Any())
+			{
+				var filepath = Path.Combine(environment.ContentRootPath, "Data/seasonTeams.json");
+				var json = File.ReadAllText(filepath);
+				var seasonTeams = JsonConvert.DeserializeObject<IEnumerable<DAL.Entities.SeasonTeam>>(json);
+
+				await fibaDbContext.SeasonsTeams.AddRangeAsync(seasonTeams);
+				await fibaDbContext.SaveChangesAsync();
+			}
+
 			// Players - Seed
 			if (!fibaDbContext.Players.Any())
 			{

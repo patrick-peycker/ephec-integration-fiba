@@ -11,6 +11,8 @@ namespace Fiba.BL.Interfaces
 		IEnumerable<Season> GetSeasonsByGender(Guid genderId);
 		IEnumerable<Team> GetTeamsByGender(Guid genderId);
 		IEnumerable<Player> GetPlayersByGender(Guid genderId);
+		IEnumerable<Match> GetMatchesBySeason(Guid seasonId);
+
 
 		Task<Season> GetSeasonByIdAsync(Guid genderId, Guid seasonId);
 	

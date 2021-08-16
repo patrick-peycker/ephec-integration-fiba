@@ -35,7 +35,7 @@ namespace IdentityServer
 						RequireClientSecret = false,
 						AllowedScopes = { "openid", "profile", "fiba.api" },
 						RedirectUris = {"http://localhost:4200/auth-callback"},
-						PostLogoutRedirectUris = {"http://localhost:4200/"},
+						PostLogoutRedirectUris = {"http://localhost:4200"},
 						AllowedCorsOrigins = {"http://localhost:4200"},
 						AllowAccessTokensViaBrowser = true,
 						AccessTokenLifetime = 3600

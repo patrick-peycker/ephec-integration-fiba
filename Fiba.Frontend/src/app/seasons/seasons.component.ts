@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { take } from 'rxjs/operators';
-import { Season } from '../models/season';
 import { GenderService } from '../services/gender.service';
 import { SeasonService } from '../services/season.service';
 

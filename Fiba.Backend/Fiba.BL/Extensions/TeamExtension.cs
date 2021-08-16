@@ -22,10 +22,10 @@ namespace Fiba.BL.Extensions
 				GenderId = Team.GenderId,
 				Gender = Team.Gender?.Name,
 
-				PlayersTeams = Team.PlayersTeams?.Select(tp => tp.ToDomain()).ToList(),
-				SeasonsTeams = Team.SeasonsTeams?.Select(st => st.ToDomain()).ToList(),
-				HomeMatches = Team.HomeMatches?.Select(m => m.ToDomain()).ToList(),
-				AwayMatches = Team.AwayMatches?.Select(m => m.ToDomain()).ToList()
+				//PlayersTeams = Team.PlayersTeams?.Select(tp => tp.ToDomain()).ToList(),
+				//SeasonsTeams = Team.SeasonsTeams?.Select(st => st.ToDomain()).ToList(),
+				//HomeMatches = Team.HomeMatches?.Select(m => m.ToDomain()).ToList(),
+				//AwayMatches = Team.AwayMatches?.Select(m => m.ToDomain()).ToList()
 			};
 		}
 
@@ -45,9 +45,9 @@ namespace Fiba.BL.Extensions
 
 				GenderId = Team.GenderId,
 
-				PlayersTeams = Team.PlayersTeams?.Select(tp => tp.ToEntity()).ToList(),
-				SeasonsTeams = Team.SeasonsTeams?.Select(st => st.ToEntity()).ToList(),
-				AwayMatches = Team.AwayMatches?.Select(m => m.ToEntity()).ToList()
+				//PlayersTeams = Team.PlayersTeams?.Select(tp => tp.ToEntity()).ToList(),
+				//SeasonsTeams = Team.SeasonsTeams?.Select(st => st.ToEntity()).ToList(),
+				//AwayMatches = Team.AwayMatches?.Select(m => m.ToEntity()).ToList()
 			};
 		}
 	}

@@ -2,24 +2,24 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Player } from '../models/player';
+import { Match } from '../models/match';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlayerService {
+export class MatchService {
 
-  public players: Player[]
+  public matches: Match[]
 
   constructor(private httpClient: HttpClient) {
 
   }
 
-  getByGender(id: string): Observable<void> {
+  getBySeason(id: string): Observable<void> {
     return this.httpClient
-      .get<Player[]>(`http://localhost:5001/api/genders/${id}/players`)
+      .get<Match[]>(`http://localhost:5001/api/seasons/${id}/matches`)
       .pipe(map(data => {
-        this.players = data;
+        this.matches = data;
         return;
       }));
   }

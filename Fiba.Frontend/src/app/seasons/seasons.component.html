@@ -1,30 +1,35 @@
 <h3 class="text-center">Seaons</h3>
 
-<div class="m-2 p-2">
-    <div class="form-group">
-        <label for="selectGender">Gender : </label>
-        <select class="form-control" id="selectGender" (change)="getByGender()" [formControl]="selectGender">
-            <option *ngFor="let gender of genderService.genders" [ngValue]=gender.genderId>{{gender.name}}</option>
-        </select>
-    </div>
+
+<div class="form-group">
+    <label for="selectGender">Gender : </label>
+    <select class="form-control" id="selectGender" (change)="getByGender()" [formControl]="selectGender">
+        <option *ngFor="let gender of genderService.genders" [ngValue]=gender.genderId>{{gender.name}}</option>
+    </select>
 </div>
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Year</th>
-            <th>Gender</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let season of seasonService.seasons">
+<a class="btn btn-primary" routerLink="/season-create">Create Season</a>
+
+<div class="m-2 p-2">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Year</th>
+                <th>Gender</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let season of seasonService.seasons">
                 <td>{{season.year}}</td>
                 <td>{{season.gender}}</td>
-                <td>
-                    <a>Teams</a> | <a>Matches</a>
+                <td *ngIf="season.seasonTeams.length === 0">
+                    <a>Add Teams</a>
+                </td>
+                <td *ngIf="season.seasonTeams.length > 0">
+                    <a>Ranking</a> | <a routerLink="/matches/{{season.seasonId}}">Matches</a>
                 </td>
             </tr>
-    </tbody>
-</table>
-<button class="btn btn-primary">Add</button>
+        </tbody>
+    </table>
+</div>

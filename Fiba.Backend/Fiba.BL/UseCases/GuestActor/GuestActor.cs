@@ -74,5 +74,10 @@ namespace Fiba.BL.UseCases.Guest
 		{
 			return fibaUnitOfWork.TeamRepository.Retrieve()?.Select(t => t.ToDomain());
 		}
+
+		public IEnumerable<Domain.Match> GetMatchesBySeason(Guid seasonId)
+		{
+			return fibaUnitOfWork.MatchRepository.RetrieveMatchesBySeason(seasonId)?.Select(m => m.ToDomain());
+		}
 	}
 }

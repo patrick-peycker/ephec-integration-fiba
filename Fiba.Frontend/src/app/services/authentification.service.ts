@@ -11,11 +11,13 @@ import { UserManager, User, UserManagerSettings, WebStorageStateStore } from 'oi
 
 export class AuthentificationService {
 
+  private isAuth : boolean;
   private manager: UserManager;
   private user: User = null;
   
   constructor(private jwtHelper: JwtHelperService, private http: HttpClient)
   {
+    this.isAuth = false;
     this.manager = new UserManager(this.getClientSettings());
     this.manager
       .getUser()
@@ -27,7 +29,7 @@ export class AuthentificationService {
     )
     .catch(
       error => {
-        alert('Authentication Service : ' + error)
+        console.log('Authentication Service : ' + error);
       }
     );
    }
@@ -52,9 +54,13 @@ export class AuthentificationService {
     };
   }
 
-  isAuthenticate() { return this.user != null && !this.user.expired; }
+  isAuthenticate() { 
+    return this.user != null && !this.user.expired;
+  }
 
-  startAuthentication() { return this.manager.signinRedirect(); }
+  startAuthentication() { 
+    return this.manager.signinRedirect(); 
+  }
 
   completeAuthentication() {
     return this.manager.signinRedirectCallback().then(user => {
@@ -69,5 +75,4 @@ export class AuthentificationService {
   getUser() {
     return this.user;
   }
-
 }

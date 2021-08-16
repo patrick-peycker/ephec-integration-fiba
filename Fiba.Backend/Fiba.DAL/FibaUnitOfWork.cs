@@ -18,6 +18,8 @@ namespace Fiba.DAL
 		public IGenderRepository GenderRepository { get { return new GenderRepository(fibaDbContext); } }
 		public ITeamRepository TeamRepository { get { return new TeamRepository(fibaDbContext); } }
 		public IPlayerRepository PlayerRepository { get { return new PlayerRepository(fibaDbContext); } }
+		public IMatchRepository MatchRepository { get { return new MatchRepository(fibaDbContext); } }
+
 
 		private bool disposed = false;
 
