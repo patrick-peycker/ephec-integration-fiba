@@ -21,6 +21,14 @@ namespace Fiba.DAL.Repositories
 			return fibaDbContext.Genders;
 		}
 
+		public bool DoesGenderExist(Guid genderId)
+		{
+			if (genderId == Guid.Empty)
+				throw new ArgumentNullException($"{nameof(genderId)} is empty in Gender Repository !");
+
+			return fibaDbContext.Genders.Any(g => g.GenderId == genderId);
+		}
+
 		public Task<Gender> RetrieveAsync(Guid id)
 		{
 			throw new NotImplementedException();
@@ -36,7 +44,7 @@ namespace Fiba.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public bool IsGenderExist(Guid genderId)
+		public bool DoesGEnderExist(Guid genderId)
 		{
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} in Gender Repository !");

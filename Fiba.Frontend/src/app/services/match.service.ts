@@ -12,7 +12,6 @@ export class MatchService {
   public matches: Match[]
 
   constructor(private httpClient: HttpClient) {
-
   }
 
   getBySeason(id: string): Observable<void> {

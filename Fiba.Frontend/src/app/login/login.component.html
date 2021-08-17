@@ -1,8 +1,6 @@
 <h3 class="text-center">Login</h3>
 
 <div class="m-2 p-2 bg-light">
-    
-        <button [disabled]="getIsAuth()" type="button" class="btn btn-success m-2"
-            (click)="onLogin()">Login</button>
-        <button [disabled]="!getIsAuth()" type="button" class="btn btn-danger m-2" (click)="onLogout()">Logout</button>
+    <button [disabled]="getIsAuth()" type="button" class="btn btn-success m-2" (click)="onLogin()">Login</button>
+    <button [disabled]="!getIsAuth()" type="button" class="btn btn-danger m-2" (click)="onLogout()">Logout</button>
 </div>

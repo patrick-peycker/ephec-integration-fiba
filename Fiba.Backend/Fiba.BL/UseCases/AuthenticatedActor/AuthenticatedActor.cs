@@ -72,7 +72,7 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 			return PlayersToCreate.Select(t => t.ToDomain());
 		}
 
-		public async Task<Domain.Season> AddSeasonByGenderAsync(Guid genderId, Domain.Season Season)
+		public async Task<Domain.Season> AddSeasonForGenderAsync(Guid genderId, Domain.Season Season)
 		{
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} in Administrator Actor !");
@@ -150,10 +150,7 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 			return seasonToCreate.ToDomain();
 		}
 
-		public bool IsGenderExist(Guid genderId)
-		{
-			return fibaUnitOfWork.GenderRepository.IsGenderExist(genderId);
-		}
+
 
 		public DateTime FirstSaturdayOfMonth(int year, int month)
 		{

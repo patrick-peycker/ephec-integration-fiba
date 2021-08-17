@@ -29,6 +29,9 @@ namespace Fiba.BL.Controllers
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} is empty in Teams Controller !");
 
+			if (!fibaActors.GuestActor.DoesGenderExist(genderId))
+				return NotFound();
+
 			try
 			{
 				logger.LogInformation($"Get Teams by gender called...");

@@ -17,6 +17,11 @@ namespace Fiba.BL.UseCases.Guest
 			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} in Guest Actor !");
 		}
 
+		public bool DoesGenderExist(Guid genderId)
+		{
+			return fibaUnitOfWork.GenderRepository.DoesGenderExist(genderId);
+		}
+
 		public IEnumerable<Domain.Gender> GetGenders()
 		{
 			return fibaUnitOfWork.GenderRepository.Retrieve()?.Select(g => g.ToDomain());

@@ -5,6 +5,6 @@ namespace Fiba.DAL.Interfaces
 {
 	public interface IGenderRepository : IRepository<Gender, Guid>
 	{
-		bool IsGenderExist(Guid genderId);
+		bool DoesGenderExist(Guid genderId);
 	}
 }

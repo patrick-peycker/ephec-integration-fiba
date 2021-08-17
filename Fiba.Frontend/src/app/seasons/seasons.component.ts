@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { GenderService } from '../services/gender.service';
 import { SeasonService } from '../services/season.service';
 
@@ -9,17 +9,17 @@ import { SeasonService } from '../services/season.service';
   styleUrls: ['./seasons.component.css']
 })
 
-export class SeasonsComponent implements OnInit {
+export class SeasonsComponent implements OnInit, OnDestroy {
 
-  constructor(public seasonService : SeasonService, public genderService : GenderService) { }
+  private genderIdSubscription: Subscription;
+
+  constructor(public seasonService: SeasonService, public genderService: GenderService) { }
 
   ngOnInit(): void {
-      this.genderService.getAll().subscribe();
+    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { this.seasonService.getByGender(value).subscribe(); });
   }
 
-  selectGender = new FormControl();
-
-  getByGender() {
-    this.seasonService.getByGender(this.selectGender.value).subscribe();
+  ngOnDestroy(): void {
+    this.genderIdSubscription.unsubscribe();
   }
 }

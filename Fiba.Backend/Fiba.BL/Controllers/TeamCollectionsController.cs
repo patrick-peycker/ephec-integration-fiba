@@ -48,7 +48,7 @@ namespace Fiba.BL.Controllers
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} in Teams Repository");
 
-			if (!fibaActors.AuthenticatedActor.IsGenderExist(genderId))
+			if (!fibaActors.GuestActor.DoesGenderExist(genderId))
 			{
 				return NotFound();
 			}

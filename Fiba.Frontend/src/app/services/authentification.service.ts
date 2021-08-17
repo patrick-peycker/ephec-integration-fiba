@@ -1,13 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { map, tap } from 'rxjs/operators';
 import { UserManager, User, UserManagerSettings, WebStorageStateStore } from 'oidc-client';
 
 @Injectable({
   providedIn: 'root'
 })
-
 
 export class AuthentificationService {
 

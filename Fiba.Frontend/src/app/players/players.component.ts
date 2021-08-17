@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { GenderService } from '../services/gender.service';
 import { PlayerService } from '../services/player.service';
 
@@ -8,18 +8,19 @@ import { PlayerService } from '../services/player.service';
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css']
 })
-export class PlayersComponent implements OnInit {
 
-  constructor(public playerService : PlayerService, public genderService : GenderService) { }
+export class PlayersComponent implements OnInit, OnDestroy {
+
+  private genderIdSubscription: Subscription;
+
+  constructor(public playerService: PlayerService, public genderService: GenderService) {
+  }
 
   ngOnInit(): void {
-    this.genderService.getAll().subscribe();
+    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { this.playerService.getByGender(value).subscribe(); });
   }
 
-  selectGender = new FormControl();
-
-  getByGender() {
-    this.playerService.getByGender(this.selectGender.value).subscribe();
+  ngOnDestroy(): void {
+    this.genderIdSubscription.unsubscribe();
   }
-
 }

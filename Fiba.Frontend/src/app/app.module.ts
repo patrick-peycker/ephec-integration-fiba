@@ -41,7 +41,8 @@ export function tokenGetter() {
     PlayersComponent,
     NotFoundComponent,
     SeasonCreateComponent,
-    MatchesComponent
+    MatchesComponent,
+    SelectGenderComponent
   ],
 
   imports: [
@@ -55,7 +56,7 @@ export function tokenGetter() {
       { path: 'home', component: HomeComponent },
       { path: 'seasons', component: SeasonsComponent },
       { path: 'matches/:id', component: MatchesComponent },
-      { path: 'season-create', canActivate: [AuthgardService], component: SeasonCreateComponent },
+      { path: 'season-create', canActivate : [AuthgardService], component: SeasonCreateComponent },
       { path: 'teams', component: TeamsComponent },
       { path: 'players', component: PlayersComponent },
       { path: 'login', component: LoginComponent },

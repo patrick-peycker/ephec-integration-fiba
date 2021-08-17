@@ -11,7 +11,7 @@ namespace Fiba.BL.Interfaces
 		Task<IEnumerable<Team>> AddTeamsByGenderAsync(Guid genderId, List<Team> Teams);
 		Task<IEnumerable<Player>> AddPlayersByGenderAsync(Guid genderId, List<Player> Players);
 		IEnumerable<Player> GetPlayersByGender(IEnumerable<int> playerIds);
-		bool IsGenderExist(Guid genderId);
-		Task<Season> AddSeasonByGenderAsync(Guid genderId, Season Season);
+
+		Task<Season> AddSeasonForGenderAsync(Guid genderId, Season Season);
 	}
 }

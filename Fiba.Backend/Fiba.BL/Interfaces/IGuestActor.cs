@@ -7,6 +7,7 @@ namespace Fiba.BL.Interfaces
 {
 	public interface IGuestActor
 	{
+		bool DoesGenderExist(Guid genderId);
 		IEnumerable<Gender> GetGenders();
 		IEnumerable<Season> GetSeasonsByGender(Guid genderId);
 		IEnumerable<Team> GetTeamsByGender(Guid genderId);

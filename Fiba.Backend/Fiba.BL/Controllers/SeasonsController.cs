@@ -1,5 +1,6 @@
 ﻿using Fiba.BL.Domain;
 using Fiba.BL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fiba.BL.Controllers
 {
-	[Route("api/genders/{genderId}/seasons")]
+	[Route("api/genders/{genderId}/[controller]")]
 	[ApiController]
 	public class SeasonsController : ControllerBase
 	{
@@ -28,6 +29,9 @@ namespace Fiba.BL.Controllers
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} is empty in Season Controller !");
 
+			if (!fibaActors.GuestActor.DoesGenderExist(genderId))
+				return NotFound();
+
 			try
 			{
 				logger.LogInformation($"Get Seansons by Gender called...");
@@ -42,9 +46,37 @@ namespace Fiba.BL.Controllers
 			}
 		}
 
-		[HttpGet("{seasonId}", Name = "GetSeason")]
+
+		[HttpPost]
+		[Authorize]
+		public async Task<ActionResult<Season>> AddSeasonForGenderAsync(Guid genderId, Season Season)
+		{
+			if (Season == null)
+				throw new ArgumentNullException($"{nameof(Season)} is empty in Season Controller");
+
+			if (!fibaActors.GuestActor.DoesGenderExist(genderId))
+			{
+				return NotFound();
+			}
+
+			try
+			{
+				logger.LogInformation($"Get Seanson For Gender called...");
+				Season = await fibaActors.AuthenticatedActor.AddSeasonForGenderAsync(genderId, Season);
+				return CreatedAtRoute("GetSeasonForGender", new { genderId, seasonId = Season.SeasonId }, Season);
+			}
+
+			catch (Exception ex)
+			{
+				var error = "Failed to Add Season for Gender !";
+				logger.LogError($"{error} - {ex.Message}");
+				return BadRequest(error);
+			}
+		}
+
+		[HttpGet("{seasonId}", Name = "GetSeasonForGender")]
 		[HttpHead]
-		public async Task<ActionResult<IEnumerable<Season>>> GetSeasonByIdAsync(Guid genderId, Guid seasonId)
+		public async Task<ActionResult<IEnumerable<Season>>> GetSeasonForGenderdAsync(Guid genderId, Guid seasonId)
 		{
 			if (genderId == null)
 				throw new ArgumentNullException($"{nameof(genderId)} is empty in Season Controller !");
@@ -68,26 +100,6 @@ namespace Fiba.BL.Controllers
 				logger.LogError($"{error} - {ex.Message}");
 				return BadRequest(error);
 			}
-		}
-
-
-		[HttpPost]
-		public async Task<IActionResult> AddSeasonForGender(Guid genderId, Domain.Season Season)
-		{
-			if (genderId == null)
-				throw new ArgumentNullException($"{nameof(genderId)} in Season Controller !");
-
-			if (Season == null)
-				throw new ArgumentNullException($"{nameof(Season)} in Season Controller");
-
-			if (!fibaActors.AuthenticatedActor.IsGenderExist(genderId))
-			{
-				return NotFound();
-			}
-
-			Season = await fibaActors.AuthenticatedActor.AddSeasonByGenderAsync(genderId, Season);
-
-			return CreatedAtRoute("GetSeason", new { genderId, seasonId = Season.SeasonId }, Season);
 		}
 	}
 }

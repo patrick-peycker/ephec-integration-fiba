@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Gender } from '../models/gender';
 
@@ -11,8 +11,11 @@ import { Gender } from '../models/gender';
 export class GenderService {
 
   public genders: Gender[];
+  genderId$ : BehaviorSubject<string>;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+    this.genderId$ = new BehaviorSubject<string>(null);
+  }
 
   getAll(): Observable<void> {
     return this.httpClient
