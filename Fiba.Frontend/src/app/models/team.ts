@@ -1,3 +1,5 @@
+import { SeasonTeam } from "./seasonTeam";
+
 export class Team {
     teamId: number;
     name: string;
@@ -7,5 +9,5 @@ export class Team {
     genderId: string;
     gender: string;
     teamPlayers?: any;
-    seasonTeams?: any;
+    seasonTeams: SeasonTeam[] = [];
 }

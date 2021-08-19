@@ -7,11 +7,13 @@ namespace Fiba.BL.Interfaces
 {
 	public interface IAuthenticatedActor
 	{
+		Task AddSeasonAsync(Season season);
+		Task<Season> GetSeasonForGenderdAsync(Guid genderId, Guid seasonId);
+
 		IEnumerable<Team> GetTeamsByGender(IEnumerable<int> isd);
-		Task<IEnumerable<Team>> AddTeamsByGenderAsync(Guid genderId, List<Team> Teams);
+		Task<IEnumerable<Team>> AddTeamsCollectionForGenderAsync(Guid genderId, List<Team> Teams);
 		Task<IEnumerable<Player>> AddPlayersByGenderAsync(Guid genderId, List<Player> Players);
 		IEnumerable<Player> GetPlayersByGender(IEnumerable<int> playerIds);
 
-		Task<Season> AddSeasonForGenderAsync(Guid genderId, Season Season);
 	}
 }

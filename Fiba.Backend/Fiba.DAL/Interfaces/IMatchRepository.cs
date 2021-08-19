@@ -8,6 +8,7 @@ namespace Fiba.DAL.Interfaces
 {
 	public interface IMatchRepository : IRepository<Match, int>
 	{
+		Task<int> RetrieveNewId();
 		IEnumerable<Match> RetrieveMatchesBySeason(Guid seasonId);
 	}
 }

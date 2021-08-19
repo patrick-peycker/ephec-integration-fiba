@@ -25,7 +25,128 @@
 		"Year": 2019,
 		"GenderId": "7a8e0b6f-3e77-4c55-9227-d47325088b25",
 		"Gender": null,
-		"SeasonsTeams": null
+		"SeasonTeams": [
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 1
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 2
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 3
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 4
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 5
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 6
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 7
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 8
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 9
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 10
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 11
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 12
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 13
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 14
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 15
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 16
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 17
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 18
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 19
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 20
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 21
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 22
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 23
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 24
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 25
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 26
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 27
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 28
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 29
+			},
+			{
+				"SeasonId": "3b23a59d-13f3-4585-beee-cf238ef8d631",
+				"TeamId": 30
+			}
+		]
 	},
 	{
 		"SeasonId": "2126d4b2-831a-407f-b788-c36bae3830d9",

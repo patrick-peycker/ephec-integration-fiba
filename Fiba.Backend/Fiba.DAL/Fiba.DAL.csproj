@@ -35,6 +35,8 @@
     <Compile Remove="Migrations\20210812144759_Init.Designer.cs" />
     <Compile Remove="Migrations\20210812144938_Init.cs" />
     <Compile Remove="Migrations\20210812144938_Init.Designer.cs" />
+    <Compile Remove="Migrations\20210819070217_DatabaseGenerated.None.cs" />
+    <Compile Remove="Migrations\20210819070217_DatabaseGenerated.None.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

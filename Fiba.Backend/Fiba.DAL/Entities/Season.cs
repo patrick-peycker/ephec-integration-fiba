@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fiba.DAL.Entities
 {
 	public class Season
 	{
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public Guid SeasonId { get; set; }
 
 		public int Year { get; set; }

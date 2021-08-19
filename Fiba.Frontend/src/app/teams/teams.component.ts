@@ -18,7 +18,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   constructor(public teamService: TeamService, public genderService: GenderService) { }
 
   ngOnInit(): void {
-    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { this.teamService.getByGender(value).subscribe(); });
+    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { if (value) { this.teamService.getByGender(value).subscribe(); } });
   }
 
   ngOnDestroy(): void {

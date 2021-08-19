@@ -4,14 +4,16 @@ using Fiba.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fiba.DAL.Migrations
 {
     [DbContext(typeof(FibaDbContext))]
-    partial class FibaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210819070445_DatabaseGenerated.None")]
+    partial class DatabaseGeneratedNone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,9 +46,6 @@ namespace Fiba.DAL.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
 
@@ -58,9 +57,6 @@ namespace Fiba.DAL.Migrations
 
                     b.Property<bool>("Postseason")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Round")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("SeasonId")
                         .HasColumnType("uniqueidentifier");

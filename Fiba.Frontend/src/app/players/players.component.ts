@@ -17,7 +17,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { this.playerService.getByGender(value).subscribe(); });
+    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { if (value) { this.playerService.getByGender(value).subscribe(); } });
   }
 
   ngOnDestroy(): void {

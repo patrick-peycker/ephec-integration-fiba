@@ -46,24 +46,21 @@ namespace Fiba.BL.Controllers
 			}
 		}
 
-
-		[HttpPost]
 		[Authorize]
-		public async Task<ActionResult<Season>> AddSeasonForGenderAsync(Guid genderId, Season Season)
+		[HttpPost]
+		public async Task<ActionResult<Season>> AddSeasonForGenderAsync(Guid genderId, Season season)
 		{
-			if (Season == null)
-				throw new ArgumentNullException($"{nameof(Season)} is empty in Season Controller");
+			if (season == null)
+				throw new ArgumentNullException($"{nameof(season)} is empty in Season Controller");
 
 			if (!fibaActors.GuestActor.DoesGenderExist(genderId))
-			{
 				return NotFound();
-			}
 
 			try
 			{
 				logger.LogInformation($"Get Seanson For Gender called...");
-				Season = await fibaActors.AuthenticatedActor.AddSeasonForGenderAsync(genderId, Season);
-				return CreatedAtRoute("GetSeasonForGender", new { genderId, seasonId = Season.SeasonId }, Season);
+				await fibaActors.AuthenticatedActor.AddSeasonAsync(season);
+				return CreatedAtRoute("GetSeasonForGender", new { genderId, seasonId = season.SeasonId }, season);
 			}
 
 			catch (Exception ex)
@@ -74,6 +71,7 @@ namespace Fiba.BL.Controllers
 			}
 		}
 
+		[Authorize]
 		[HttpGet("{seasonId}", Name = "GetSeasonForGender")]
 		[HttpHead]
 		public async Task<ActionResult<IEnumerable<Season>>> GetSeasonForGenderdAsync(Guid genderId, Guid seasonId)
@@ -86,11 +84,11 @@ namespace Fiba.BL.Controllers
 			try
 			{
 				logger.LogInformation($"Get Seanson by Id called...");
-				season = await fibaActors.GuestActor.GetSeasonByIdAsync(genderId, seasonId);
 
-				if (season == null)
+				if (!fibaActors.GuestActor.DoesGenderExist(genderId))
 					return NotFound();
-
+				
+				season = await fibaActors.AuthenticatedActor.GetSeasonForGenderdAsync(genderId, seasonId);
 				return Ok(season);
 			}
 

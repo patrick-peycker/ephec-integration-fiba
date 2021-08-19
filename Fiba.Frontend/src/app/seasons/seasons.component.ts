@@ -16,7 +16,7 @@ export class SeasonsComponent implements OnInit, OnDestroy {
   constructor(public seasonService: SeasonService, public genderService: GenderService) { }
 
   ngOnInit(): void {
-    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { this.seasonService.getByGender(value).subscribe(); });
+    this.genderIdSubscription = this.genderService.genderId$.subscribe((value) => { if (value) { this.seasonService.getByGender(value).subscribe(); } });
   }
 
   ngOnDestroy(): void {

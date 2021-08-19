@@ -104,14 +104,14 @@ namespace Fiba.DAL
 				.HasForeignKey(s => s.PlayerId)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			// Statistics - Player - Foreign Key
+			// Statistics - Team - Foreign Key
 			modelBuilder.Entity<Statistic>()
 				.HasOne(s => s.Team)
 				.WithMany(t => t.Statistics)
 				.HasForeignKey(s => s.TeamId)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			// Statistics - Player - Foreign Key
+			// Statistics - Match - Foreign Key
 			modelBuilder.Entity<Statistic>()
 				.HasOne(s => s.Match)
 				.WithMany(m => m.Statistics)

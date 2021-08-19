@@ -24,13 +24,15 @@ export class SeasonService {
       }));
   }
 
-  add(season: Season) : Observable<Season> {
+  add(season: Season): Observable<Season> {
     const token = this.authentification.getUser().access_token;
+    const body = JSON.stringify(season);
+    console.log(body);
     return this.httpClient
       .post<Season>(
         `http://localhost:5001/api/genders/${season.genderId}/seasons`,
-        JSON.stringify({ genderId: season.genderId, year: season.year }),
-        { headers: new HttpHeaders({"Content-Type" : "application/json", "Authorization" : `Bearer ${token}`}) }
-    )
+        body,
+        { headers: new HttpHeaders({ "Content-Type": "application/json", "Authorization": `Bearer ${token}` }) }
+      )
   }
 }

@@ -9,6 +9,8 @@ namespace Fiba.DAL.Entities
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int MatchId { get; set; }
 
+		public int Round { get; set; }
+		public int Day { get; set; }
 		public DateTime Date { get; set; }
 		public int HomeTeamScore { get; set; }
 		public int Period { get; set; }

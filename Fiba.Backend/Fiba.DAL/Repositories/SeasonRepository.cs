@@ -16,6 +16,14 @@ namespace Fiba.DAL.Repositories
 		{
 			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} in Season Repository !");
 		}
+		
+		public bool DoesSeasonExist(Guid seasonId)
+		{
+			if (seasonId == Guid.Empty)
+				throw new ArgumentNullException($"{nameof(seasonId)} is empty in Season Repository !");
+
+			return fibaDbContext.Seasons.Any(s => s.SeasonId == seasonId);
+		}
 
 		public IEnumerable<Season> RetrieveSeasons(Guid genderId)
 		{
@@ -24,8 +32,9 @@ namespace Fiba.DAL.Repositories
 
 			return fibaDbContext.Seasons
 				.Include(s => s.Gender)
-				.Include(s=>s.SeasonsTeams)
-				.Where(s => s.GenderId == genderId);
+				.Include(s => s.SeasonsTeams)
+				.Where(s => s.GenderId == genderId)
+				.OrderByDescending(s => s.Year);
 		}
 
 		public async Task<Season> RetrieveSeasonByIdAsync(Guid genderId, Guid seasonId)
@@ -47,20 +56,14 @@ namespace Fiba.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public Task CreateAsync(Season Entity)
+		public async Task CreateAsync(Season Entity)
 		{
-			throw new NotImplementedException();
-		}
-
-		public async Task CreateSeasonAsync(Season Season)
-		{
-			if (Season == null)
+			if (Entity == null)
 			{
-				throw new ArgumentNullException($"{nameof(Season)} in Season Repository !");
+				throw new ArgumentNullException($"{nameof(Entity)} is empty in Season Repository !");
 			}
 
-			await fibaDbContext.Seasons
-				.AddAsync(Season);
+			await fibaDbContext.Seasons.AddRangeAsync(Entity);
 		}
 
 		public Task DeleteAsync(Season Entity)

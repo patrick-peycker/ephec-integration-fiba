@@ -14,7 +14,7 @@ namespace Fiba.BL.UseCases.Guest
 
 		public GuestActor(IFibaUnitOfWork fibaUnitOfWork)
 		{
-			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} in Guest Actor !");
+			this.fibaUnitOfWork = fibaUnitOfWork ?? throw new ArgumentNullException($"{nameof(fibaUnitOfWork)} is empty in Guest Actor !");
 		}
 
 		public bool DoesGenderExist(Guid genderId)
@@ -51,14 +51,10 @@ namespace Fiba.BL.UseCases.Guest
 			return fibaUnitOfWork.PlayerRepository.RetrievePlayersByGender(genderId)?.Select(s => s.ToDomain());
 		}
 
-		public async Task<Domain.Season> GetSeasonByIdAsync(Guid genderId, Guid seasonId)
+
+		public bool DoesSeasonExist(Guid seasonId)
 		{
-			if (genderId == null)
-				throw new ArgumentNullException($"{nameof(genderId)} in empty Season Controller !");
-
-			DAL.Entities.Season season = await fibaUnitOfWork.SeasonRepository.RetrieveSeasonByIdAsync(genderId, seasonId);
-
-			return season.ToDomain();
+			return fibaUnitOfWork.SeasonRepository.DoesSeasonExist(seasonId);
 		}
 
 		public async Task<Domain.Season> GetSeasonAsync(Guid genderId, Guid seasonId)

@@ -14,8 +14,10 @@ namespace Fiba.BL.Extensions
 			{
 				MatchId = Match.MatchId,
 
-				Status = Match.Status,
+				Round = Match.Round,
+				Day = Match.Day,
 				Date = Match.Date,
+				Status = Match.Status,
 				Period = Match.Period,
 				Time = Match.Time,
 				HomeTeamScore = Match.HomeTeamScore,
@@ -42,13 +44,21 @@ namespace Fiba.BL.Extensions
 			return new DAL.Entities.Match
 			{
 				MatchId = Match.MatchId,
-				Status = Match.Status,
+
+				Round = Match.Round,
+				Day = Match.Day,
 				Date = Match.Date,
+				Status = Match.Status,
 				Period = Match.Period,
 				Time = Match.Time,
 				HomeTeamScore = Match.HomeTeamScore,
 				VisitorTeamScore = Match.VisitorTeamScore,
 				Postseason = Match.Postseason,
+
+				SeasonId = Match.SeasonId,
+
+				HomeTeamId = Match.HomeTeamId,
+				VisitorTeamId = Match.VisitorTeamId,
 
 				Statistics = Match.Statistics?.Select(s => s.ToEntity()).ToList()
 			};
