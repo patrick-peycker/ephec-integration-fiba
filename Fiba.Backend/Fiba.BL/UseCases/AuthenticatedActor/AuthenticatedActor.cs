@@ -2,6 +2,7 @@
 using Fiba.BL.Interfaces;
 using Fiba.BL.UseCases.Guest;
 using Fiba.DAL.Interfaces;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,39 +26,41 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 				throw new ArgumentException($"{nameof(season)} is empty in Authenticated Actor !");
 
 			season.SeasonId = Guid.NewGuid();
-			List<int> teamsId = new List<int>();
+			season.Matches = new List<Domain.Match>();
+
+			Random rnd = new Random();
+			int index;
+
+			List<int> teams = new List<int>();
 
 			foreach (var seasonTeam in season.SeasonTeams)
 			{
 				seasonTeam.SeasonId = season.SeasonId;
-				teamsId.Add(seasonTeam.TeamId);
+				teams.Add(seasonTeam.TeamId);
 			}
 
 			// Initialise HomeTeams & AwayTeams
-			Random rnd = new Random();
-			int index;
+
 
 			List<int> HomeTeamsId = new List<int>();
 			List<int> AwayTeamsId = new List<int>();
 
 			for (int c = 1; c <= season.SeasonTeams.Count; c++)
 			{
-				index = rnd.Next(teamsId.Count());
+				index = rnd.Next(teams.Count());
 
 				if (c <= season.SeasonTeams.Count / 2)
 				{
-					HomeTeamsId.Add(teamsId.ElementAt(index));
+					HomeTeamsId.Add(teams.ElementAt(index));
 				}
 
 				else
 				{
-					AwayTeamsId.Add(teamsId.ElementAt(index));
+					AwayTeamsId.Add(teams.ElementAt(index));
 				}
 
-				teamsId.RemoveAt(index);
+				teams.RemoveAt(index);
 			}
-
-			season.Matches = new List<Domain.Match>();
 
 			var matchId = await fibaUnitOfWork.MatchRepository.RetrieveNewId();
 
@@ -135,7 +138,16 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 			DAL.Entities.Season seasonToCreate = season.ToEntity();
 
 			await fibaUnitOfWork.SeasonRepository.CreateAsync(seasonToCreate);
-			int nbRecords = await fibaUnitOfWork.SaveChangesAsync();
+
+			try
+			{
+				int nbRecords = await fibaUnitOfWork.SaveChangesAsync();
+			}
+
+			catch (Exception ex)
+			{
+				throw new Exception($"Failed to Add Season for Gender!e {ex.Message}");
+			}
 		}
 
 		public async Task<Domain.Season> GetSeasonForGenderdAsync(Guid genderId, Guid seasonId)

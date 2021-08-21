@@ -4,6 +4,9 @@ export class Match {
     matchId : number;
     date : Date;
 
+    round : number;
+    day: number;
+
     status : string;
     period : number;
     time : Date;

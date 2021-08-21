@@ -1,6 +1,8 @@
 ﻿using Fiba.DAL.Entities;
 using Fiba.DAL.Interfaces;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace Fiba.DAL.Repositories
 		{
 			this.fibaDbContext = fibaDbContext ?? throw new ArgumentNullException($"{nameof(fibaDbContext)} in Season Repository !");
 		}
-		
+
 		public bool DoesSeasonExist(Guid seasonId)
 		{
 			if (seasonId == Guid.Empty)
@@ -45,7 +47,7 @@ namespace Fiba.DAL.Repositories
 			}
 
 			return await fibaDbContext.Seasons
-				.Include(s=> s.Gender)
+				.Include(s => s.Gender)
 				.Include(s => s.Matches)
 				.Where(s => s.GenderId == genderId && s.SeasonId == seasonId)
 				.FirstOrDefaultAsync();
@@ -63,7 +65,15 @@ namespace Fiba.DAL.Repositories
 				throw new ArgumentNullException($"{nameof(Entity)} is empty in Season Repository !");
 			}
 
-			await fibaDbContext.Seasons.AddRangeAsync(Entity);
+			try
+			{
+				await fibaDbContext.Seasons.AddRangeAsync(Entity);
+			}
+
+			catch (SqlException ex)
+			{
+				throw new Exception($"Failed to Add Season for Gender!e {ex.Message}");
+			}
 		}
 
 		public Task DeleteAsync(Season Entity)

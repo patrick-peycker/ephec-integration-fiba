@@ -1,19 +1,30 @@
 <div *ngFor="let match of matchService.matches">
     <div class="row">
-        <div class="col-md-1 text-center">
-            <img src="{{match.homeTeam.thumbUrl}}" style="width: 30px; height: 20px;" class="img-thumbnail"/>
+        <!-- Round -->
+        <div class="col-md-2">
+            <div class="text-left">
+                {{match.date|date}}
+            </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-1 text-center">
+            <img src="{{match.homeTeam.thumbUrl}}" style="width: 75px; height: 50px;" class="img-thumbnail" />
+        </div>
+        <div class="col-md-2">
             <div class="text-left">{{ match.homeTeam.name}}</div>
         </div>
         <div class="col-md-2">
             <div class="text-center">{{match.homeTeamScore}} - {{match.visitorTeamScore}}</div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="text-right">{{match.visitorTeam.name}}</div>
         </div>
         <div class="col-md-1 text-center">
-            <img src="{{match.visitorTeam.thumbUrl}}" style="width: 30px; height: 20px;" class="img-thumbnail"/>
+            <img src="{{match.visitorTeam.thumbUrl}}" style="width: 75px; height: 50px;" class="img-thumbnail" />
+        </div>
+        <div class="col-md-1">
+            <div class="text-center">
+                {{match.status}}
+            </div>
         </div>
     </div>
 </div>

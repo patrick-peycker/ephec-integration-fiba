@@ -1,5 +1,6 @@
 ﻿using Fiba.DAL.Interfaces;
 using Fiba.DAL.Repositories;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
