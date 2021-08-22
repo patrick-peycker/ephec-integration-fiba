@@ -16,7 +16,7 @@ namespace Fiba.BL.Domain
 		public Guid GenderId { get; set; }
 		public string Gender { get; set; }
 
-		public ICollection<Match> Matches { get; set; }
-		public ICollection<SeasonTeam> SeasonTeams { get; set; }
+		public List<Match> Matches { get; set; }
+		public List<SeasonTeam> SeasonTeams { get; set; }
 	}
 }

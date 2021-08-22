@@ -32,106 +32,70 @@ namespace Fiba.BL.UseCases.SuperAdministrator
 			int index;
 
 			List<int> teams = new List<int>();
+			List<int> opponents = new List<int>();
+			List<int> days = new List<int>();
 
-			foreach (var seasonTeam in season.SeasonTeams)
+			bool home = true;
+			int matchId = await fibaUnitOfWork.MatchRepository.RetrieveNewId();
+			int nbDays = season.SeasonTeams.Count() - 1;
+			int day = 1;
+			
+			season.SeasonTeams.ForEach(team => teams.Add(team.TeamId));
+
+			foreach (var team in season.SeasonTeams)
 			{
-				seasonTeam.SeasonId = season.SeasonId;
-				teams.Add(seasonTeam.TeamId);
-			}
+				teams.Remove(team.TeamId);
 
-			// Initialise HomeTeams & AwayTeams
+				team.SeasonId = season.SeasonId;
 
+				// Intialize opponents
+				opponents.Clear();
+				teams.ForEach(team => opponents.Add(team));
 
-			List<int> HomeTeamsId = new List<int>();
-			List<int> AwayTeamsId = new List<int>();
-
-			for (int c = 1; c <= season.SeasonTeams.Count; c++)
-			{
-				index = rnd.Next(teams.Count());
-
-				if (c <= season.SeasonTeams.Count / 2)
+				foreach (var opponent in teams)
 				{
-					HomeTeamsId.Add(teams.ElementAt(index));
-				}
+					index = rnd.Next(opponents.Count);
 
-				else
-				{
-					AwayTeamsId.Add(teams.ElementAt(index));
-				}
-
-				teams.RemoveAt(index);
-			}
-
-			var matchId = await fibaUnitOfWork.MatchRepository.RetrieveNewId();
-
-			var nbDaysByRound = (season.SeasonTeams.Count - 1);
-			var nbMatchesByDay = season.SeasonTeams.Count / 2;
-
-			for (int dayNr = 1; dayNr <= nbDaysByRound; dayNr++)
-			{
-				List<int> teamHome = new List<int>();
-				List<int> teamAway = new List<int>();
-
-				// Re-Initialize Team Home & Away Team
-				for (int i = 0; i < HomeTeamsId.Count; i++)
-				{
-					if (dayNr % 2 == 0)
+					season.Matches.Add(new Domain.Match()
 					{
-						teamHome.Add(AwayTeamsId.ElementAt(i));
-						teamAway.Add(teamHome.ElementAt(i));
-					}
+						MatchId = matchId,
+						Round = home ? 1 : 2,
+						Day = day,
+						Date = new DateTime(season.Year, 1, 1),
+						Status = "20:00",
 
+						HomeTeamId = team.TeamId,
+						VisitorTeamId = opponents.ElementAt(index),
+
+						SeasonId = season.SeasonId
+					});
+
+					matchId++;
+
+					season.Matches.Add(new Domain.Match()
+					{
+						MatchId = matchId,
+						Round = home ? 2 : 1,
+						Day = day,
+						Date = new DateTime(season.Year, 1, 1),
+						Status = "20:00",
+
+						HomeTeamId = opponents.ElementAt(index),
+						VisitorTeamId = team.TeamId,
+
+						SeasonId = season.SeasonId
+					});
+
+					matchId++;
+
+					opponents.RemoveAt(index);
+
+					home = !home;
+
+					if (day < nbDays)
+						day++;
 					else
-					{
-						teamHome.Add(HomeTeamsId.ElementAt(i));
-						teamAway.Add(AwayTeamsId.ElementAt(i));
-					}
-				}
-
-				for (int matchNr = 1; matchNr <= nbMatchesByDay; matchNr++)
-				{
-					for (int i = 1; i < teamHome.Count; i++)
-					{
-						index = rnd.Next(teamAway.Count);
-
-						// Round 1
-						Domain.Match matchRound1 = new Domain.Match
-						{
-							MatchId = matchId,
-							Round = 1,
-							Day = dayNr,
-							Date = new DateTime(season.Year, 1, 1),
-							Status = "20:00",
-
-							HomeTeamId = teamHome.ElementAt(i),
-							VisitorTeamId = teamAway.ElementAt(index),
-
-							SeasonId = season.SeasonId
-						};
-
-						season.Matches.Add(matchRound1);
-						matchId++;
-
-						// Round 2
-						Domain.Match matchRound2 = new Domain.Match
-						{
-							MatchId = matchId,
-							Round = 2,
-							Day = dayNr,
-							Date = new DateTime(season.Year, 1, 1),
-							Status = "20:00",
-
-							HomeTeamId = matchRound1.VisitorTeamId,
-							VisitorTeamId = matchRound1.HomeTeamId,
-
-							SeasonId = season.SeasonId
-						};
-
-						season.Matches.Add(matchRound2);
-						matchId++;
-
-						teamAway.RemoveAt(index);
-					}
+						day = 1;
 				}
 			}
 
